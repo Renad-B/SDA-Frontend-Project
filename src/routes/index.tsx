@@ -7,11 +7,13 @@ import Error from '../pages/ErrorPage'
 import AdminDashboard from '../pages/AdminDashboard'
 import Navbar from '../components/Navbar'
 import Contact from '../pages/Contact'
-import Footer from '../components/footer'
 import UserDashboard from '../pages/UserDashboard'
 import AdminOrders from '../components/AdminOrders'
 import UserProfile from '../pages/UserProfile'
 import UserOrders from '../components/UserOrders'
+import Footer from '../components/Footer'
+import Login from '../pages/Login'
+import UserList from '../components/UsersList'
 
 const Router = () => {
   return (
@@ -20,6 +22,7 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/dasboard/login" element={<Login />} />
         <Route path="/productinfo" element={<ProductDetails />} />
 
         <Route path="/dasboard/user" element={<UserDashboard />} />
@@ -30,6 +33,7 @@ const Router = () => {
         <Route path="/dashboard/admin/catgeory" element={<Category />} />
         <Route path="/dashboard/admin/products" element={<Products />} />
         <Route path="/dashboard/admin/orders" element={<AdminOrders />} />
+        <Route path="/dashboard/admin/users" element={<UserList />} />
 
         <Route path="*" element={<Error />} />
       </Routes>

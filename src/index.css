@@ -4,7 +4,6 @@
   color: #ffffff;
   padding: 20px;
 }
-
 .navbar-links {
   list-style-type: none;
   padding: 0;
@@ -22,6 +21,49 @@
 
 .navbar-links a:hover {
   color: #00ccff;
+}
+
+/*Home page*/
+
+.hero {
+  background-color: #f1f1f1;
+  padding: 20px;
+}
+
+.contianer-home {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.contianer-home h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.contianer-home p {
+  font-size: 16px;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.contianer-home h2 {
+  font-size: 26px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.contianer-home img {
+  width: 100%;
+  height: auto;
+  max-width: 400px;
+  margin-top: 20px;
+}
+
+.about-img {
+  text-align: center;
+  margin-top: 20px;
 }
 
 /* Category */
@@ -162,3 +204,7 @@ form input[type="text"] {
 .footer-links a:hover {
   color: #00ccff;
 }
+img{
+  width:100%
+}
+/* Make it responisve solve the pitcutre problem*/
