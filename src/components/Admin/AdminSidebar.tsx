@@ -11,16 +11,16 @@ const AdminSidebar = () => {
       <h2>Menu</h2>
       <ul>
         <li>
-          <Link to="/dashboard/admin/catgeory">Category</Link>
+          <Link to="/dasboard/admin/catgeory">Category</Link>
         </li>
         <li>
-          <Link to="/dashboard/admin/products">Products</Link>
+          <Link to="/dasboard/admin/products">Products</Link>
         </li>
         <li>
-          <Link to="/dashboard/admin/orders">Orders</Link>
+          <Link to="/dasboard/admin/orders">Orders</Link>
         </li>
         <li>
-          <Link to="/dashboard/admin/users">Users</Link>
+          <Link to="/dasboard/admin/users">Users</Link>
         </li>
       </ul>
     </aside>

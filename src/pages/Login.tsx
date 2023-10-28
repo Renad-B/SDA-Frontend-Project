@@ -1,7 +1,18 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { AppDispatch, RootState } from '../redux/store'
+import { fetchUser, login } from '../redux/slices/users/userSlice'
 
-const Login = () => {
+const Login = ({ pathName }: { pathName: string }) => {
+  const { users } = useSelector((state: RootState) => state.usersR)
+
+  const dispatch: AppDispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchUser())
+  }, [dispatch])
+
   const navigate = useNavigate()
   const [user, setUser] = useState({
     email: '',
@@ -15,11 +26,20 @@ const Login = () => {
     })
   }
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
+    console.log(users)
     event.preventDefault()
-    const { email, password } = user
-    console.log({ email, password })
-    //make the login req, compare the loging info, navigate('/blogs'), routing protection: isLogged,isAdmin
+    try {
+      const FindUser = users.find((userData) => userData.email === user.email)
+      if (FindUser && FindUser.password === user.password) {
+        dispatch(login(FindUser))
+        navigate(pathName ? pathName : `/dasboard/${FindUser.role}`)
+      } else {
+        console.log('Email or password is wrong')
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (

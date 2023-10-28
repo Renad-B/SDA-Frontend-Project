@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import AdminSidebar from './AdminSidebar'
+import AdminSidebar from './Admin/AdminSidebar'
 import { AppDispatch, RootState } from '../redux/store'
 import { useEffect } from 'react'
 import { fetchCategory } from '../redux/slices/categories/categorySlice'

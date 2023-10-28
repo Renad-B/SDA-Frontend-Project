@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import AdminSidebar from './AdminSidebar'
+import AdminSidebar from './Admin/AdminSidebar'
 import { AppDispatch, RootState } from '../redux/store'
 import { useEffect } from 'react'
 import { fetchProducts } from '../redux/slices/products/productSlice'
@@ -34,8 +34,8 @@ const Products = () => {
                   <img src={product.image} alt="product img" />
                   <p>{product.name}</p>
                   <p>{product.description}</p>
-                  <button>Edit</button>
                   <button>Delete</button>
+                  <button>Edit</button>
                 </article>
               )
             })}

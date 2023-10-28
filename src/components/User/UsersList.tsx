@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux'
-import AdminSidebar from './AdminSidebar'
-import { AppDispatch, RootState } from '../redux/store'
+import AdminSidebar from '../Admin/AdminSidebar'
+import { AppDispatch, RootState } from '../../redux/store'
 import { useEffect } from 'react'
-import { fetchUser } from '../redux/slices/users/userSlice'
+import { fetchUser } from '../../redux/slices/users/userSlice'
 
 const UsersList = () => {
   const { users, isLoading, error } = useSelector((state: RootState) => state.usersR)
