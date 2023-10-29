@@ -25,7 +25,7 @@ export type ProductState = {
   products: Product[]
   error: null | string
   isLoading: boolean
-  singleProduct: Product
+  singleProduct: Product | null
   searchTerm: string
 }
 
@@ -33,7 +33,7 @@ const initialState: ProductState = {
   products: [],
   error: null,
   isLoading: false,
-  singleProduct: {} as Product,
+  singleProduct: null as Product | null,
   searchTerm: ''
 }
 

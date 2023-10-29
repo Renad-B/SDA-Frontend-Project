@@ -5,7 +5,7 @@ import { AppDispatch, RootState } from '../redux/store'
 import { fetchUser, login } from '../redux/slices/users/userSlice'
 
 const Login = ({ pathName }: { pathName: string }) => {
-  const { users } = useSelector((state: RootState) => state.usersR)
+  const { users } = useSelector((state: RootState) => state.usersReducer)
 
   const dispatch: AppDispatch = useDispatch()
 
@@ -30,16 +30,37 @@ const Login = ({ pathName }: { pathName: string }) => {
     console.log(users)
     event.preventDefault()
     try {
-      const FindUser = users.find((userData) => userData.email === user.email)
-      if (FindUser && FindUser.password === user.password) {
-        dispatch(login(FindUser))
-        navigate(pathName ? pathName : `/dasboard/${FindUser.role}`)
-      } else {
-        console.log('Email or password is wrong')
+      const findUser = users.find((userData) => userData.email === user.email)
+
+      if (!findUser) {
+        console.log('User dosent exist')
+        return
       }
+
+      if (findUser.password !== user.password) {
+        console.log('User password is not Correct!')
+        return
+      }
+
+      if (findUser.password !== user.password) {
+        console.log('User password is not Correct!')
+        return
+      }
+
+      if (findUser.ban) {
+        console.log('You are Blocked')
+        return
+      }
+      findUser && findUser.password === user.password
+      dispatch(login(findUser))
+      navigate(pathName ? pathName : `/dasboard/${findUser.role}`)
     } catch (error) {
       console.log(error)
     }
+    setUser({
+      email: '',
+      password: ''
+    })
   }
 
   return (

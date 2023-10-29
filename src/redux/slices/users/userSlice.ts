@@ -18,6 +18,7 @@ export type User = {
   email: string
   password: string
   role: string
+  ban: boolean
 }
 
 export type UserState = {
@@ -26,6 +27,7 @@ export type UserState = {
   isLoading: boolean
   isLoggedIn: boolean
   userData: User | null
+  ban: boolean
 }
 
 //set the data in local storge using JSON
@@ -37,7 +39,8 @@ const initialState: UserState = {
   error: null,
   isLoading: false,
   isLoggedIn: userData?.isLoggedIn ?? false,
-  userData: userData?.userData ?? null
+  userData: userData?.userData ?? null,
+  ban: false
 }
 
 export const userSlice = createSlice({
@@ -53,6 +56,20 @@ export const userSlice = createSlice({
       state.isLoggedIn = false
       state.userData = null
       localStorage.setItem('userData', JSON.stringify(state))
+    },
+    deleteUser: (state, action) => {
+      const filterUsers = state.users.filter((user) => user.id !== action.payload)
+      state.users = filterUsers
+    },
+    banUser: (state, action) => {
+      const id = action.payload
+      const findUser = state.users.find((user) => user.id === id)
+      if (findUser) {
+        findUser.ban = !findUser.ban
+      }
+    },
+    addUser: (state, action) => {
+      state.users.push(action.payload)
     }
   },
   extraReducers(builder) {
@@ -72,5 +89,5 @@ export const userSlice = createSlice({
   }
 })
 
-export const { login, logout } = userSlice.actions
+export const { login, logout, deleteUser, banUser, addUser } = userSlice.actions
 export default userSlice.reducer

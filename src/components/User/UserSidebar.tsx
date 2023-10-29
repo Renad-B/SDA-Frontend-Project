@@ -1,12 +1,11 @@
 import { Link } from 'react-router-dom'
+import ProfilePage from '../../pages/Profilepage'
 
 const UserSidebar = () => {
   return (
     <aside className="sidebar">
       <div className="user/profile">
-        <h1>User Profile</h1>
-        <h1>Name: .....</h1>
-        <h1>Email .....</h1>
+        <ProfilePage />
       </div>
       <h2>Menu</h2>
       <ul>

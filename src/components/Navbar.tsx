@@ -5,7 +5,7 @@ import { logout } from '../redux/slices/users/userSlice'
 import { useEffect } from 'react'
 
 const Navbar = () => {
-  const { isLoggedIn, userData } = useSelector((state: RootState) => state.usersR)
+  const { isLoggedIn, userData } = useSelector((state: RootState) => state.usersReducer)
   const dispatch: AppDispatch = useDispatch()
   const navigate = useNavigate()
   const handleLogout = () => {

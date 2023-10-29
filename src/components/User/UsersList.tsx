@@ -2,10 +2,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import AdminSidebar from '../Admin/AdminSidebar'
 import { AppDispatch, RootState } from '../../redux/store'
 import { useEffect } from 'react'
-import { fetchUser } from '../../redux/slices/users/userSlice'
+import { banUser, deleteUser, fetchUser } from '../../redux/slices/users/userSlice'
 
 const UsersList = () => {
-  const { users, isLoading, error } = useSelector((state: RootState) => state.usersR)
+  const { users, isLoading, error } = useSelector((state: RootState) => state.usersReducer)
 
   const dispatch: AppDispatch = useDispatch()
 
@@ -20,6 +20,14 @@ const UsersList = () => {
     return <p> {error}...</p>
   }
 
+  const handleDelete = (id: number) => {
+    dispatch(deleteUser(id))
+  }
+
+  const handleBan = (id: number) => {
+    dispatch(banUser(id))
+  }
+
   return (
     <div className="container">
       <AdminSidebar />
@@ -28,14 +36,20 @@ const UsersList = () => {
         <section className="users">
           {users.length > 0 &&
             users.map((user) => {
-              return (
-                <article key={user.id} className="user">
-                  <p>{`${user.firstName} ${user.lastName}`}</p>
-                  <p>{user.email}</p>
-                  <p>{user.password}</p>
-                  <p>{user.role}</p>
-                </article>
-              )
+              if (user.role !== 'admin') {
+                return (
+                  <article key={user.id} className="user">
+                    <p>{`${user.firstName} ${user.lastName}`}</p>
+                    <p>{user.email}</p>
+                    <p>{user.password}</p>
+                    <p>{user.role}</p>
+                    <button onClick={() => handleDelete(user.id)}>Delete</button>
+                    <button onClick={() => handleBan(user.id)}>
+                      {user.ban ? 'Unblock' : 'Block'}
+                    </button>
+                  </article>
+                )
+              }
             })}
         </section>
       </div>

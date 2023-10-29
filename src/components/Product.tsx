@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 import { fetchProducts } from '../redux/slices/products/productSlice'
 
 const Products = () => {
-  const { products, isLoading, error } = useSelector((state: RootState) => state.productsR)
+  const { products, isLoading, error } = useSelector((state: RootState) => state.productsReducer)
 
   const dispatch: AppDispatch = useDispatch()
 
@@ -23,7 +23,7 @@ const Products = () => {
   return (
     <div className="container">
       <AdminSidebar />
-      <div className="main-content">
+      <div className="main-product">
         <h2>Create a product</h2>
         <h2>List of Proudects/Form </h2>
         <section className="products">

@@ -69,6 +69,7 @@
 /* Category */
 .category-container {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .main-content {
@@ -88,13 +89,18 @@ form input[type="text"] {
   padding: 5px;
 }
 
-.create-button {
-  color: #ffffff;
+.create-button, .category button, .product button, .product a {
+  padding: 10px 20px;
   background-color: #4b4a4a;
+  color: #ffffff;
   border: none;
-  padding: 5px 10px;
+  border-radius: 5px;
   cursor: pointer;
-  margin-left: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.create-button:hover, .category button:hover, .product button:hover, .product a:hover {
+  background-color: #00ccff;
 }
 
 .category {
@@ -109,19 +115,6 @@ form input[type="text"] {
 .category p {
   margin: 0;
   margin-right: 10px;
-}
-
-.category button {
-  color: #ffffff;
-  background-color: #4b4a4a;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  margin-left: 10px;
-}
-
-.category button:hover {
-  background-color: #00ccff;
 }
 
 /* Admin Dashboard */
@@ -168,6 +161,36 @@ form input[type="text"] {
   padding: 30px;
   background-color: #f1f1f1;
 }
+/*products card*/
+.main-product {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-left: 20px;
+}
+
+.product {
+  width: calc(33.33% - 20px);
+  margin-bottom: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.product img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.product p {
+  margin-bottom: 10px;
+}
+
+.product button {
+  margin-right: 10px;
+}
 
 /* Footer */
 .footer {
@@ -206,9 +229,10 @@ form input[type="text"] {
 }
 
 img {
-  width: 80%;
+  width: 40%;
 }
 .actions {
   display: flex;
   justify-content: space-between;
 }
+

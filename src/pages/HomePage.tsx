@@ -4,10 +4,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../redux/store'
 import { Link } from 'react-router-dom'
 import SortProducts from '../components/SortProducts'
+import SearchInput from '../components/SearchInput'
 
 const Home = () => {
   const { products, isLoading, error, searchTerm } = useSelector(
-    (state: RootState) => state.productsR
+    (state: RootState) => state.productsReducer
   )
 
   const dispatch: AppDispatch = useDispatch()
@@ -17,7 +18,8 @@ const Home = () => {
   }, [])
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
-    dispatch(searchProduct(event.target.value))
+    const searchTerm = event.target.value
+    dispatch(searchProduct(searchTerm))
   }
 
   const filterProducts = searchTerm
@@ -41,16 +43,11 @@ const Home = () => {
           </div>
           <div className="main-content">
             <div className="actions">
-              <input
-                type="text"
-                placeholder="Search by Price or Category"
-                value={searchTerm}
-                onChange={handleSearch}
-              />
+              <SearchInput searchTerm={searchTerm} handleSearch={handleSearch} />
               <SortProducts />
             </div>
             <h1>All product are listed here:</h1>
-            <section className="products">
+            <section className="products-card">
               {filterProducts.length > 0 &&
                 filterProducts.map((product: Product) => {
                   return (

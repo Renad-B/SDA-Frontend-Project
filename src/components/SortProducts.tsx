@@ -7,7 +7,8 @@ const SortProducts = () => {
   const dispatch: AppDispatch = useDispatch()
 
   const handleSortChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    dispatch(sortProducts(event.target.value))
+    const { value } = event.target
+    dispatch(sortProducts(value))
   }
   return (
     <div>

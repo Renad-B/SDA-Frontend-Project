@@ -5,7 +5,7 @@ import Login from '../pages/Login'
 
 const AdminRoute = () => {
   const location = useLocation()
-  const { isLoggedIn, userData } = useSelector((state: RootState) => state.usersR)
+  const { isLoggedIn, userData } = useSelector((state: RootState) => state.usersReducer)
   return isLoggedIn && userData.role === 'admin' ? (
     <Outlet />
   ) : (

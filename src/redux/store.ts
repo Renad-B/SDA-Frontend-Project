@@ -5,9 +5,9 @@ import userReducer from './slices/users/userSlice'
 
 export const store = configureStore({
   reducer: {
-    productsR: productsReducer,
-    categoriesR: categoryReducer,
-    usersR: userReducer
+    productsReducer: productsReducer,
+    categoriesReducer: categoryReducer,
+    usersReducer: userReducer
   }
 })
 
