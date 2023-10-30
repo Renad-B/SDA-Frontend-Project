@@ -25,7 +25,7 @@ const Register = () => {
     event.preventDefault()
     const newUser = { id: new Date().getTime(), ...user } // Add parentheses after getTime
     dispatch(fetchUser()).then(() => dispatch(addUser(newUser)))
-    navigate('/login')
+    navigate('/dasboard/login')
   }
   return (
     <div className="form">

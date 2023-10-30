@@ -32,25 +32,21 @@ const Navbar = () => {
           </>
         )}
 
-        {/*!isLoggedIn && (
-          <li>
-            <Link to="/dasboard/logout" onClick={handleLogout}>
-              Logout
-            </Link>
-          </li>
-        )*/}
-
+        {!isLoggedIn && (
+          <>
+            <li>
+              <Link to="/dasboard/register">Register</Link>
+            </li>
+            <li>
+              <Link to="/dasboard/login">Login</Link>
+            </li>
+          </>
+        )}
         <li>
           <Link to="/">Home</Link>
         </li>
         <li>
           <Link to="/contact">Contact</Link>
-        </li>
-        <li>
-          <Link to="/dasboard/login">Login</Link>
-        </li>
-        <li>
-          <Link to="/dasboard/register">Register</Link>
         </li>
       </ul>
     </nav>
