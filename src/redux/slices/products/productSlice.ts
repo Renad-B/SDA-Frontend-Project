@@ -56,6 +56,20 @@ export const productSlice = createSlice({
       if (sortingCriteria === 'category') {
         state.products.sort((a, b) => a.name.localeCompare(b.name))
       } else if (sortingCriteria === 'price') state.products.sort((a, b) => a.price - b.price)
+    },
+    deleteProduct: (state, action) => {
+      const filterCategory = state.products.filter((category) => category.id !== action.payload)
+      state.products = filterCategory
+    },
+    addProduct: (state, action) => {
+      state.products.push(action.payload)
+    },
+    updateProduct: (state, action) => {
+      const { id, name } = action.payload
+      const findProduct = state.products.find((product) => product.id === id)
+      if (findProduct) {
+        findProduct.name = name
+      }
     }
   },
   extraReducers(builder) {
@@ -74,5 +88,12 @@ export const productSlice = createSlice({
       })
   }
 })
-export const { findProductById, searchProduct, sortProducts } = productSlice.actions
+export const {
+  findProductById,
+  searchProduct,
+  sortProducts,
+  deleteProduct,
+  addProduct,
+  updateProduct
+} = productSlice.actions
 export default productSlice.reducer

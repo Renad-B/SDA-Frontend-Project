@@ -1,11 +1,19 @@
 import { useDispatch, useSelector } from 'react-redux'
 import AdminSidebar from './Admin/AdminSidebar'
 import { AppDispatch, RootState } from '../redux/store'
-import { useEffect } from 'react'
-import { fetchProducts } from '../redux/slices/products/productSlice'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import {
+  addProduct,
+  deleteProduct,
+  fetchProducts,
+  updateProduct
+} from '../redux/slices/products/productSlice'
 
 const Products = () => {
   const { products, isLoading, error } = useSelector((state: RootState) => state.productsReducer)
+  const [productName, setProductName] = useState('')
+  const [isEditing, setIsEditing] = useState(false)
+  const [productId, setProudctId] = useState(0)
 
   const dispatch: AppDispatch = useDispatch()
 
@@ -19,12 +27,45 @@ const Products = () => {
   if (error) {
     return <p> {error}...</p>
   }
-
+  const handleDelete = (id: number) => {
+    console.log(id)
+    dispatch(deleteProduct(id))
+  }
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setProductName(event.target.value)
+  }
+  const handleEditing = (id: number, name: string) => {
+    setProudctId(id)
+    setIsEditing(!isEditing)
+    setProductName(name)
+  }
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault()
+    if (!isEditing) {
+      const newProdcut = { id: new Date().getTime(), name: productName }
+      dispatch(addProduct(newProdcut))
+    } else {
+      const updateCategoryData = { id: productId, name: productName }
+      dispatch(updateProduct(updateCategoryData))
+    }
+    setProductName('')
+  }
   return (
     <div className="container">
       <AdminSidebar />
       <div className="main-product">
         <h2>Create a product</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="product"
+            value={productName}
+            placeholder="Add product name .."
+            onChange={handleChange}
+          />
+          <button>{isEditing ? 'Update' : 'Add'}</button>
+        </form>
+        <br />
         <h2>List of Proudects/Form </h2>
         <section className="products">
           {products.length > 0 &&
@@ -34,8 +75,18 @@ const Products = () => {
                   <img src={product.image} alt="product-img" />
                   <p>{product.name}</p>
                   <p>{product.description}</p>
-                  <button>Delete</button>
-                  <button>Edit</button>
+                  <button
+                    onClick={() => {
+                      handleDelete(product.id)
+                    }}>
+                    Delete
+                  </button>
+                  <button
+                    onClick={() => {
+                      handleEditing(product.id, product.name)
+                    }}>
+                    Edit
+                  </button>
                 </article>
               )
             })}
