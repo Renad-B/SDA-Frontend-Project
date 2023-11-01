@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { fetchProducts, findProductById } from '../redux/slices/products/productSlice'
 import { AppDispatch, RootState } from '../redux/store'
 import { useDispatch, useSelector } from 'react-redux'
+import { fetchCategory } from '../redux/slices/categories/categorySlice'
 
 const categoryNames = {
   1: 'Electronics',
@@ -30,7 +31,8 @@ const ProductDetails = () => {
 
   useEffect(() => {
     dispatch(fetchProducts()).then(() => dispatch(findProductById(Number(id))))
-  }, [])
+    dispatch(fetchCategory())
+  }, [id])
 
   if (isLoading) {
     return <p>Loading ...</p>
@@ -42,8 +44,6 @@ const ProductDetails = () => {
     const category = categories.find((category) => category.id === categoryId)
     return category ? category.name : 'Category not found'
   }
-  console.log(categories)
-  //why the categories doaent appear ?
   return (
     <div>
       <h1>Proudct Detail</h1>
@@ -56,7 +56,9 @@ const ProductDetails = () => {
           <p>
             Categories:{' '}
             {singleProduct.categories &&
-              singleProduct.categories.map((categoryId) => getCategoryNameById(categoryId))}
+              singleProduct.categories
+                .map((categoryId) => getCategoryNameById(categoryId))
+                .join(', ')}
           </p>
           <p>Size: {singleProduct.sizes && singleProduct.sizes.join(', ')}</p>
           <button>Add to cart</button>

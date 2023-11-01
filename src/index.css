@@ -161,23 +161,25 @@ form input[type="text"] {
   padding: 30px;
   background-color: #f1f1f1;
 }
-/*products card*/
+/*products card:*/
 .main-product {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   margin-left: 20px;
 }
-
+.products {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Creates three equal-width columns */
+  gap: 20px; /* Adjust the gap as needed for spacing */
+}
 .product {
-  width: calc(33.33% - 20px);
   margin-bottom: 20px;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
 .product img {
   width: 100%;
   height: auto;
@@ -228,11 +230,11 @@ form input[type="text"] {
   color: #00ccff;
 }
 
-img {
-  width: 40%;
-}
 .actions {
   display: flex;
   justify-content: space-between;
+}
+img {
+  width: 40%;
 }
 

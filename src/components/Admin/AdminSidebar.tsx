@@ -1,12 +1,9 @@
 import { Link } from 'react-router-dom'
-import ProfilePage from '../../pages/Profilepage'
 
 const AdminSidebar: React.FC = () => {
   return (
     <aside className="sidebar">
-      <div className="admin-profile">
-        <ProfilePage />
-      </div>
+      <div className="admin-profile"></div>
       <h2>Menu</h2>
       <ul>
         <li>

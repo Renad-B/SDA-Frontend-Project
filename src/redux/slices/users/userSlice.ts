@@ -70,6 +70,16 @@ export const userSlice = createSlice({
     },
     addUser: (state, action) => {
       state.users.push(action.payload)
+    },
+    updateUser: (state, action) => {
+      const { id, firstName, lastName } = action.payload
+      const findUser = state.users.find((user) => user.id === id)
+      if (findUser) {
+        findUser.firstName = firstName
+        findUser.lastName = lastName
+        state.userData = findUser
+        localStorage.setItem('userData', JSON.stringify(state))
+      }
     }
   },
   extraReducers(builder) {
@@ -89,5 +99,5 @@ export const userSlice = createSlice({
   }
 })
 
-export const { login, logout, deleteUser, banUser, addUser } = userSlice.actions
+export const { login, logout, deleteUser, banUser, addUser, updateUser } = userSlice.actions
 export default userSlice.reducer

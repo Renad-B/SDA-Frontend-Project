@@ -30,7 +30,22 @@ const initialState: CategoryState = {
 export const categorySlice = createSlice({
   name: 'categories',
   initialState,
-  reducers: {},
+  reducers: {
+    deleteCategory: (state, action) => {
+      const filterCategory = state.categories.filter((category) => category.id !== action.payload)
+      state.categories = filterCategory
+    },
+    addCategory: (state, action) => {
+      state.categories.push(action.payload)
+    },
+    updateCategory: (state, action) => {
+      const { id, name } = action.payload
+      const findCategory = state.categories.find((category) => category.id === id)
+      if (findCategory) {
+        findCategory.name = name
+      }
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchCategory.pending, (state) => {
@@ -47,5 +62,5 @@ export const categorySlice = createSlice({
       })
   }
 })
-
+export const { deleteCategory, addCategory, updateCategory } = categorySlice.actions
 export default categorySlice.reducer

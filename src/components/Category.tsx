@@ -1,8 +1,12 @@
-import { useEffect } from 'react'
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
 import AdminSidebar from './Admin/AdminSidebar'
-import { fetchCategory } from '../redux/slices/categories/categorySlice'
+import {
+  addCategory,
+  deleteCategory,
+  fetchCategory,
+  updateCategory
+} from '../redux/slices/categories/categorySlice'
 
 import { AppDispatch, RootState } from '../redux/store'
 
@@ -10,6 +14,9 @@ const Category = () => {
   const { categories, isLoading, error } = useSelector(
     (state: RootState) => state.categoriesReducer
   )
+  const [categoryName, setCategoryName] = useState('')
+  const [isEditing, setIsEditing] = useState(false)
+  const [categoryId, setCategoryId] = useState(0)
 
   const dispatch: AppDispatch = useDispatch()
 
@@ -23,26 +30,70 @@ const Category = () => {
   if (error) {
     return <p> {error}...</p>
   }
-
+  const handleDelete = (id: number) => {
+    console.log(id)
+    dispatch(deleteCategory(id))
+  }
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setCategoryName(event.target.value)
+  }
+  const handleEditing = (id: number, name: string) => {
+    setCategoryId(id)
+    setIsEditing(!isEditing)
+    setCategoryName(name)
+  }
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault()
+    if (!isEditing) {
+      const newCategory = { id: new Date().getTime(), name: categoryName }
+      dispatch(addCategory(newCategory))
+    } else {
+      const updateCategoryData = { id: categoryId, name: categoryName }
+      dispatch(updateCategory(updateCategoryData))
+    }
+    setCategoryName('')
+  }
   return (
     <div className="container">
       <AdminSidebar />
       <div className="main-content">
         <h2>Create a category</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="category"
+            value={categoryName}
+            placeholder="Add category name .."
+            onChange={handleChange}
+          />
+          <button>{isEditing ? 'Update' : 'Add'}</button>
+        </form>
+        <br />
         <h2>List of categories </h2>
-        <section className="categories">
-          {categories.length > 0 &&
-            categories.map((category) => {
-              return (
-                <article key={category.id} className="category">
-                  <p>{category.name}</p>
-                  <button>Edit</button>
-                  <button>Delete</button>
-                </article>
-              )
-            })}
-        </section>
       </div>
+
+      <section className="categories">
+        {categories.length > 0 &&
+          categories.map((category) => {
+            return (
+              <article key={category.id} className="category">
+                <p>{category.name}</p>
+                <button
+                  onClick={() => {
+                    handleEditing(category.id, category.name)
+                  }}>
+                  Edit
+                </button>
+                <button
+                  onClick={() => {
+                    handleDelete(category.id)
+                  }}>
+                  Delete
+                </button>
+              </article>
+            )
+          })}
+      </section>
     </div>
   )
 }

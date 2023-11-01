@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { store } from './redux/store'
 import App from './App'
 import './index.css'
-
+import 'bootstrap/dist/css/bootstrap.min.css'
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <Provider store={store}>
     <App />

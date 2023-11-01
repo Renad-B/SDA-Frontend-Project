@@ -6,7 +6,6 @@ import { fetchUser, login } from '../redux/slices/users/userSlice'
 
 const Login = ({ pathName }: { pathName: string }) => {
   const { users } = useSelector((state: RootState) => state.usersReducer)
-
   const dispatch: AppDispatch = useDispatch()
 
   useEffect(() => {

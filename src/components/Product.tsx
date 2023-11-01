@@ -31,7 +31,7 @@ const Products = () => {
             products.map((product) => {
               return (
                 <article key={product.id} className="product">
-                  <img src={product.image} alt="product img" />
+                  <img src={product.image} alt="product-img" />
                   <p>{product.name}</p>
                   <p>{product.description}</p>
                   <button>Delete</button>
