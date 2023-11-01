@@ -66,7 +66,7 @@ const Products = () => {
           <button>{isEditing ? 'Update' : 'Add'}</button>
         </form>
         <br />
-        <h2>List of Proudects/Form </h2>
+        <h2>List of Prodcts </h2>
         <section className="products">
           {products.length > 0 &&
             products.map((product) => {

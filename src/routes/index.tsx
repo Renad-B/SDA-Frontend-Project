@@ -17,6 +17,7 @@ import UserList from '../components/User/UsersList'
 import ProtectedRoute from './ProtectedRoute'
 import AdminRoute from './AdminRoute'
 import Register from '../pages/Register'
+import Cart from '../pages/Cart'
 
 const Router = () => {
   return (
@@ -28,6 +29,7 @@ const Router = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/dasboard/login" element={<Login />} />
         <Route path="/dasboard/logout" element={<Home />} />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/dasboard/register" element={<Register />} />
         <Route path="/productinfo" element={<ProductDetails />} />
 

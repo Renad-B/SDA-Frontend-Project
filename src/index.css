@@ -89,7 +89,7 @@ form input[type="text"] {
   padding: 5px;
 }
 
-.create-button, .category button, .product button, .product a {
+.create-button, .category button, .product button, button, .product a {
   padding: 10px 20px;
   background-color: #4b4a4a;
   color: #ffffff;
@@ -186,13 +186,6 @@ form input[type="text"] {
   margin-bottom: 10px;
 }
 
-.product p {
-  margin-bottom: 10px;
-}
-
-.product button {
-  margin-right: 10px;
-}
 
 /* Footer */
 .footer {
