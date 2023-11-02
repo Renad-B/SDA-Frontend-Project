@@ -11,8 +11,8 @@ const SortProducts = () => {
     dispatch(sortProducts(value))
   }
   return (
-    <div>
-      <label> Sort by:</label>
+    <div className="sort-by-container">
+      <label className="sort-label"> Sort by:</label>
       <select onChange={handleSortChange}>
         <option value="price" defaultValue="price">
           Price

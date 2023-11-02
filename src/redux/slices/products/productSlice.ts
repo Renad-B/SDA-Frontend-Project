@@ -69,6 +69,8 @@ export const productSlice = createSlice({
       const findProduct = state.products.find((product) => product.id === id)
       if (findProduct) {
         findProduct.name = name
+        // findProduct.description = description
+        // findProduct.categories = categories
       }
     }
   },

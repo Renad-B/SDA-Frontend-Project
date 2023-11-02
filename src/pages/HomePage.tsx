@@ -101,7 +101,7 @@ const Home = () => {
               <SearchInput searchTerm={searchTerm} handleSearch={handleSearch} />
               <SortProducts />
             </div>
-            <h1>All product are listed here:</h1>
+            <h2>All product are listed here:</h2>
             <section>
               <div className="products">
                 {filterProducts.length > 0 &&
@@ -111,7 +111,7 @@ const Home = () => {
                         <img src={product.image} alt="product img" />
                         <p>Name: {product.name}</p>
                         <p>Description: {product.description}</p>
-                        <h1>Price: {product.price} $</h1>
+                        <p>Price: {product.price} $</p>
                         <button
                           onClick={() => {
                             handleAddToCart(product)

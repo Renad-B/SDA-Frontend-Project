@@ -28,17 +28,18 @@ const Register = () => {
     navigate('/dasboard/login')
   }
   return (
-    <div className="form">
-      <form action="" onSubmit={handleSubmit}>
-        <label htmlFor="firstName">first Name :</label>
+    <div className="register-container">
+      <h1>User Registration</h1>
+      <form action="register-form" onSubmit={handleSubmit} className="register-form">
+        <label htmlFor="firstName">First Name:</label>
         <input type="text" name="firstName" onChange={handleChange} />
-        <label htmlFor="lastName">last Name :</label>
+        <label htmlFor="lastName">Last Name:</label>
         <input type="text" name="lastName" onChange={handleChange} />
-        <label htmlFor="email">email</label>
+        <label htmlFor="email">Email:</label>
         <input type="email" name="email" onChange={handleChange} />
-        <label htmlFor="password">password</label>
+        <label htmlFor="password">Password:</label>
         <input type="password" name="password" onChange={handleChange} />
-        <button type="submit">submit</button>
+        <button type="submit">Submit</button>
       </form>
     </div>
   )

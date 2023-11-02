@@ -54,7 +54,8 @@ const Products = () => {
     <div className="container">
       <AdminSidebar />
       <div className="main-product">
-        <h2>Create a product</h2>
+        <br />
+        <h4>Create a product</h4>
         <form onSubmit={handleSubmit}>
           <input
             type="text"
@@ -66,7 +67,8 @@ const Products = () => {
           <button>{isEditing ? 'Update' : 'Add'}</button>
         </form>
         <br />
-        <h2>List of Prodcts </h2>
+        <h4>List of Prodcts </h4>
+        <br />
         <section className="products">
           {products.length > 0 &&
             products.map((product) => {

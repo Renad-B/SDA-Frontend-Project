@@ -48,9 +48,6 @@ const Navbar = () => {
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/contact">Contact</Link>
-        </li>
-        <li>
           <Link to="/cart">
             {' '}
             <CartIcon value={cartItems.length > 0 ? cartItems.length : 0} />

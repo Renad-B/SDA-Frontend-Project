@@ -8,9 +8,10 @@ const SearchInput = ({ searchTerm, handleSearch }: SearchInputProps) => {
   return (
     <input
       type="text"
-      placeholder="Search by Price or Category"
+      placeholder="Search products ..."
       value={searchTerm}
       onChange={handleSearch}
+      className="search-input"
     />
   )
 }

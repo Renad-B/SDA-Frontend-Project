@@ -6,7 +6,6 @@ import Products from '../components/Product'
 import Error from '../pages/ErrorPage'
 import AdminDashboard from '../pages/AdminDashboard'
 import Navbar from '../components/Navbar'
-import Contact from '../pages/Contact'
 import UserDashboard from '../pages/UserDashboard'
 import AdminOrders from '../components/Admin/AdminOrders'
 import UserProfile from '../pages/UserProfile'
@@ -26,7 +25,6 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products/:id" element={<ProductDetails />} />
-        <Route path="/contact" element={<Contact />} />
         <Route path="/dasboard/login" element={<Login />} />
         <Route path="/dasboard/logout" element={<Home />} />
         <Route path="/cart" element={<Cart />} />

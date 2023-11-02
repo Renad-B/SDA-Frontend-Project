@@ -63,7 +63,7 @@ const Login = ({ pathName }: { pathName: string }) => {
   }
 
   return (
-    <div className="">
+    <div className="login-container">
       <h1>User Login</h1>
       <form className="login-form" action="login" onSubmit={handleSubmit}>
         <label htmlFor="email"> Email: </label>

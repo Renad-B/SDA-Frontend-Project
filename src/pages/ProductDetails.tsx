@@ -1,9 +1,10 @@
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { fetchProducts, findProductById } from '../redux/slices/products/productSlice'
+import { Product, fetchProducts, findProductById } from '../redux/slices/products/productSlice'
 import { AppDispatch, RootState } from '../redux/store'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchCategory } from '../redux/slices/categories/categorySlice'
+import { addToCart } from '../redux/slices/Cart/cartSlice'
 
 const categoryNames = {
   1: 'Electronics',
@@ -29,6 +30,13 @@ const ProductDetails = () => {
 
   const dispatch: AppDispatch = useDispatch()
 
+  const handleAddToCart = (product: Product) => {
+    console.log(product)
+    //add to cart
+    dispatch(addToCart(product))
+    //remove from cart
+  }
+
   useEffect(() => {
     dispatch(fetchProducts()).then(() => dispatch(findProductById(Number(id))))
     dispatch(fetchCategory())
@@ -46,24 +54,33 @@ const ProductDetails = () => {
   }
   return (
     <div>
-      <h1>Proudct Detail</h1>
-      {singleProduct && (
-        <>
-          <img src={singleProduct.image} alt="product img" />
-          <h1>Name: {singleProduct.name}</h1>
-          <h1>Price: {singleProduct.price} $</h1>
-          <p>Description: {singleProduct.description}</p>
-          <p>
-            Categories:{' '}
-            {singleProduct.categories &&
-              singleProduct.categories
-                .map((categoryId) => getCategoryNameById(categoryId))
-                .join(', ')}
-          </p>
-          <p>Size: {singleProduct.sizes && singleProduct.sizes.join(', ')}</p>
-          <button>Add to cart</button>
-        </>
-      )}
+      <h2> -- Proudct Detail --</h2>
+      <div className="products-details">
+        <div className="product-detals">
+          {singleProduct && (
+            <>
+              <img src={singleProduct.image} alt="product img" />
+              <h2>Name: {singleProduct.name}</h2>
+              <h3>Price: {singleProduct.price} $</h3>
+              <p>Description: {singleProduct.description}</p>
+              <p>
+                Categories:{' '}
+                {singleProduct.categories &&
+                  singleProduct.categories
+                    .map((categoryId) => getCategoryNameById(categoryId))
+                    .join(', ')}
+              </p>
+              <p>Size: {singleProduct.sizes && singleProduct.sizes.join(', ')}</p>
+              <button
+                onClick={() => {
+                  handleAddToCart(singleProduct)
+                }}>
+                Add to cart
+              </button>
+            </>
+          )}
+        </div>
+      </div>
     </div>
   )
 }
