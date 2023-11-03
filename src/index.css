@@ -118,6 +118,7 @@ form input[type='text'] {
 .category button,
 .product button,
 button,
+/*its here*/
 .product a {
   padding: 10px 20px;
   background-color: #4b4a4a;
@@ -221,7 +222,6 @@ button,
   height: auto;
   margin-bottom: 10px;
 }
-
 /* Footer */
 .footer {
   background-color: #4b4a4a;
@@ -258,6 +258,24 @@ button,
   color: #00ccff;
 }
 
+.social-media-links {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+}
+
+.social-media-links li:not(:last-child) {
+  margin-right: 10px;
+}
+
+.social-media-links a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.social-media-links a:hover {
+  color: #00ccff;
+}
 .actions {
   display: flex;
   justify-content: space-between;
@@ -413,7 +431,7 @@ img {
   }
 }
 
-.product-detals {
+.product-details{
   margin-bottom: 20px;
   padding: 20px;
   border: 1px solid #ccc;
@@ -421,7 +439,7 @@ img {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.product-detals img {
+.products-details img {
   width: 100%;
   height: auto;
   margin-bottom: 10px;

@@ -15,15 +15,50 @@ const Register = () => {
     role: 'user',
     ban: false
   })
+  //validation
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  const [firstNameError, setFirstNameError] = useState('')
+  const [lastNameError, setLastNameError] = useState('')
+  const [passwordError, setPasswordError] = useState('')
+  const [emailError, setEmailError] = useState('')
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target
     setUser((prevUser) => {
       return { ...prevUser, [event.target.name]: event.target.value }
     })
+    // Validate email
+    if (name === 'email') {
+      if (!emailPattern.test(value)) {
+        setEmailError('Invalid email address')
+      } else {
+        setEmailError('')
+      }
+    }
   }
+
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()
-    const newUser = { id: new Date().getTime(), ...user } // Add parentheses after getTime
+    const newUser = { id: new Date().getTime(), ...user }
+
+    if (user.firstName.length < 3) {
+      setFirstNameError('First name must be at least 3 character')
+      return
+    }
+
+    if (user.lastName.length < 3) {
+      setLastNameError('last name must be at least 3 character')
+      return
+    }
+    if (user.password.length < 6) {
+      setPasswordError('password should be more than 6 character')
+      return
+    }
+    if (emailError) {
+      return
+    }
+
+    //dispatch
     dispatch(fetchUser()).then(() => dispatch(addUser(newUser)))
     navigate('/dasboard/login')
   }
@@ -32,13 +67,17 @@ const Register = () => {
       <h1>User Registration</h1>
       <form action="register-form" onSubmit={handleSubmit} className="register-form">
         <label htmlFor="firstName">First Name:</label>
-        <input type="text" name="firstName" onChange={handleChange} />
+        <input type="text" name="firstName" onChange={handleChange} required />
+        <p>{firstNameError}</p>
         <label htmlFor="lastName">Last Name:</label>
-        <input type="text" name="lastName" onChange={handleChange} />
+        <input type="text" name="lastName" onChange={handleChange} required />
+        <p>{lastNameError}</p>
         <label htmlFor="email">Email:</label>
-        <input type="email" name="email" onChange={handleChange} />
+        {emailError && <p>{emailError}</p>}
+        <input type="email" name="email" onChange={handleChange} required />
         <label htmlFor="password">Password:</label>
-        <input type="password" name="password" onChange={handleChange} />
+        <p>{passwordError}</p>
+        <input type="password" name="password" onChange={handleChange} required />
         <button type="submit">Submit</button>
       </form>
     </div>

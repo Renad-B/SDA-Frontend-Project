@@ -17,12 +17,24 @@ const Login = ({ pathName }: { pathName: string }) => {
     email: '',
     password: ''
   })
+  //validation
+  const [passwordError, setPasswordError] = useState('')
+  const [emailError, setEmailError] = useState('')
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target
     setUser((prevState) => {
       return { ...prevState, [name]: value }
     })
+    // Validate email
+    if (name === 'email') {
+      if (!emailPattern.test(value)) {
+        setEmailError('Invalid email address')
+      } else {
+        setEmailError('')
+      }
+    }
   }
 
   const handleSubmit = async (event: FormEvent) => {
@@ -60,6 +72,10 @@ const Login = ({ pathName }: { pathName: string }) => {
       email: '',
       password: ''
     })
+    if (user.password.length < 6) {
+      setPasswordError('password should be more than 6 character')
+      return
+    }
   }
 
   return (
@@ -68,7 +84,9 @@ const Login = ({ pathName }: { pathName: string }) => {
       <form className="login-form" action="login" onSubmit={handleSubmit}>
         <label htmlFor="email"> Email: </label>
         <input type="email" name="email" id="email" value={user.email} onChange={handleChange} />
+        {emailError && <span className="error">{emailError}</span>}
         <label htmlFor="password"> Password: </label>
+        <p>{passwordError}</p>
         <input
           type="password"
           name="password"

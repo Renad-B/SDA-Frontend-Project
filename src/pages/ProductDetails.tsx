@@ -6,18 +6,18 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchCategory } from '../redux/slices/categories/categorySlice'
 import { addToCart } from '../redux/slices/Cart/cartSlice'
 
-const categoryNames = {
-  1: 'Electronics',
-  2: 'Computers',
-  3: 'Mobile Phones',
-  4: 'Gaming',
-  5: 'Photography',
-  6: 'Health & Fitness',
-  7: 'Home Entertainment',
-  8: 'Home Appliances',
-  9: 'Audio',
-  10: 'Storage'
-}
+// const categoryNames = {
+//   1: 'Electronics',
+//   2: 'Computers',
+//   3: 'Mobile Phones',
+//   4: 'Gaming',
+//   5: 'Photography',
+//   6: 'Health & Fitness',
+//   7: 'Home Entertainment',
+//   8: 'Home Appliances',
+//   9: 'Audio',
+//   10: 'Storage'
+// }
 
 const ProductDetails = () => {
   const { id } = useParams()
@@ -56,7 +56,7 @@ const ProductDetails = () => {
     <div>
       <h2> -- Proudct Detail --</h2>
       <div className="products-details">
-        <div className="product-detals">
+        <div className="product-details">
           {singleProduct && (
             <>
               <img src={singleProduct.image} alt="product img" />
