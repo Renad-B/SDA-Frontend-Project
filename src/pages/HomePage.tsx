@@ -26,6 +26,13 @@ const Home = () => {
     dispatch(fetchCategory())
   }, [])
 
+  //The pagination here
+  //current page, how many items per page
+  const [currentPage, setCurrentPage] = useState(1)
+  const [itemsPerPage, setItemsPerPage] = useState(2)
+
+  //pagination logic
+
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     const searchTerm = event.target.value
     console.log('Search term:', searchTerm)
@@ -53,7 +60,34 @@ const Home = () => {
 
     return categoryMatch && searchMatch
   })
+  //pagination logic
+  const indexOfLastItem = currentPage * itemsPerPage
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage
 
+  const currentItems = filterProducts.slice(indexOfFirstItem, indexOfLastItem)
+  const totalPages = Math.ceil(filterProducts.length / itemsPerPage)
+
+  const handleNextPage = () => {
+    setCurrentPage(currentPage + 1)
+  }
+  const handlePrevPage = () => {
+    setCurrentPage(currentPage - 1)
+  }
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page)
+  }
+
+  const buttonElements = []
+  for (let i = 2; i <= totalPages - 1; i++) {
+    buttonElements.push(
+      <button
+        onClick={() => {
+          handlePageChange(i)
+        }}>
+        {i}
+      </button>
+    )
+  }
   if (isLoading) {
     return <p>Loading ...</p>
   }
@@ -65,9 +99,7 @@ const Home = () => {
     console.log(product)
     //add to cart
     dispatch(addToCart(product))
-    //remove from cart
   }
-
   return (
     <div>
       <section className="hero" id="hero">
@@ -104,8 +136,8 @@ const Home = () => {
             <h2>All product are listed here:</h2>
             <section>
               <div className="products">
-                {filterProducts.length > 0 &&
-                  filterProducts.map((product: Product) => {
+                {currentItems.length > 0 &&
+                  currentItems.map((product: Product) => {
                     return (
                       <article key={product.id} className="product">
                         <img src={product.image} alt="product img" />
@@ -124,6 +156,15 @@ const Home = () => {
                       </article>
                     )
                   })}
+              </div>
+              <div className="page">
+                <button onClick={handleNextPage} disabled={currentPage === totalPages}>
+                  Next
+                </button>
+                <>{buttonElements}</>
+                <button onClick={handlePrevPage} disabled={currentPage === 1}>
+                  Prev
+                </button>
               </div>
             </section>
           </div>
