@@ -55,8 +55,10 @@ const UsersList = () => {
                         <td>{user.password}</td>
                         <td>{user.role}</td>
                         <td>
-                          <button onClick={() => handleDelete(user.id)}>Delete</button>
-                          <button onClick={() => handleBan(user.id)}>
+                          <button className="btns" onClick={() => handleDelete(user.id)}>
+                            Delete
+                          </button>
+                          <button className="btns" onClick={() => handleBan(user.id)}>
                             {user.ban ? 'Unblock' : 'Block'}
                           </button>
                         </td>

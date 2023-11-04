@@ -72,6 +72,7 @@ const ProductDetails = () => {
               </p>
               <p>Size: {singleProduct.sizes && singleProduct.sizes.join(', ')}</p>
               <button
+                className="btns"
                 onClick={() => {
                   handleAddToCart(singleProduct)
                 }}>

@@ -39,7 +39,9 @@ const UserProfile = () => {
               <p>Email: {`${userData?.email} `}</p>
               <p>ID: {`${userData?.id} `}</p>
               <p>Role: {`${userData?.role} `}</p>
-              <button onClick={handleEditClick}>Edit profile</button>
+              <button className="btns" onClick={handleEditClick}>
+                Edit profile
+              </button>
             </div>
             {isEditing && (
               <form action="" onSubmit={handleSubmit}>
@@ -53,7 +55,9 @@ const UserProfile = () => {
                   name="lastName"
                   value={user.lastName}
                   onChange={handleChange}></input>
-                <button type="submit">Update profile</button>
+                <button className="btns" type="submit">
+                  Update profile
+                </button>
               </form>
             )}
           </div>

@@ -29,7 +29,7 @@ const Home = () => {
   //The pagination here
   //current page, how many items per page
   const [currentPage, setCurrentPage] = useState(1)
-  const [itemsPerPage, setItemsPerPage] = useState(2)
+  const [itemsPerPage, setItemsPerPage] = useState(3)
 
   //pagination logic
 
@@ -81,6 +81,7 @@ const Home = () => {
   for (let i = 2; i <= totalPages - 1; i++) {
     buttonElements.push(
       <button
+        className="btn"
         onClick={() => {
           handlePageChange(i)
         }}>
@@ -158,11 +159,14 @@ const Home = () => {
                   })}
               </div>
               <div className="page">
-                <button onClick={handleNextPage} disabled={currentPage === totalPages}>
+                <button
+                  className="btns"
+                  onClick={handleNextPage}
+                  disabled={currentPage === totalPages}>
                   Next
                 </button>
                 <>{buttonElements}</>
-                <button onClick={handlePrevPage} disabled={currentPage === 1}>
+                <button className="btns" onClick={handlePrevPage} disabled={currentPage === 1}>
                   Prev
                 </button>
               </div>

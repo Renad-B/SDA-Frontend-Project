@@ -117,8 +117,8 @@ form input[type='text'] {
 .create-button,
 .category button,
 .product button,
-button,
-/*its here*/
+button
+/*its*/
 .product a {
   padding: 10px 20px;
   background-color: #4b4a4a;
@@ -444,3 +444,29 @@ img {
   height: auto;
   margin-bottom: 10px;
 }
+.show-details-button {
+   /* Add your desired styles here */
+  /* For example: */
+  background-color: blue;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.show-details-button:hover {
+  background-color: #00ccff;
+}
+.btns{
+  padding: 10px 20px;
+  background-color: #4b4a4a;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.btns:hover {
+  background-color: #00ccff;
+}
+

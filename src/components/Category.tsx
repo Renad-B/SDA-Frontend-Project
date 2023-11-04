@@ -66,7 +66,7 @@ const Category = () => {
             placeholder="Add category name .."
             onChange={handleChange}
           />
-          <button>{isEditing ? 'Update' : 'Add'}</button>
+          <button className="btns">{isEditing ? 'Update' : 'Add'}</button>
         </form>
         <br />
         <h2>List of categories </h2>

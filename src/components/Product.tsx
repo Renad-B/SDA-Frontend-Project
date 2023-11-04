@@ -64,7 +64,7 @@ const Products = () => {
             placeholder="Add product name .."
             onChange={handleChange}
           />
-          <button>{isEditing ? 'Update' : 'Add'}</button>
+          <button className="btns">{isEditing ? 'Update' : 'Add'}</button>
         </form>
         <br />
         <h4>List of Prodcts </h4>

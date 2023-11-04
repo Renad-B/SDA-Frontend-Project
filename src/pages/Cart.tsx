@@ -40,7 +40,9 @@ export const Cart = () => {
       <div className="cart-main">
         {cartItems.length > 0 && (
           <>
-            <button onClick={DeleteAll}>Delete All</button>
+            <button className="btns" onClick={DeleteAll}>
+              Delete All
+            </button>
             <div className="cart-items">
               {cartItems.map((cartItem, index) => (
                 <article key={`${cartItem.id}-${index}`} className="products">
