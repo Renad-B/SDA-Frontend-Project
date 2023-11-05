@@ -26,7 +26,7 @@ const Register = () => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
     setUser((prevUser) => {
-      return { ...prevUser, [event.target.name]: event.target.value }
+      return { ...prevUser, [name]: value }
     })
     // Validate email
     if (name === 'email') {

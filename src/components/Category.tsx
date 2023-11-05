@@ -32,11 +32,11 @@ const Category = () => {
     return <p> {error}...</p>
   }
   const handleDelete = (id: number) => {
-    console.log(id)
     dispatch(deleteCategory(id))
   }
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setCategoryName(event.target.value)
+    const value = event.target.value
+    setCategoryName(value)
   }
   const handleEditing = (id: number, name: string) => {
     setCategoryId(id)

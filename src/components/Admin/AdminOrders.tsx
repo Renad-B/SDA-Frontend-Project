@@ -8,7 +8,9 @@ import { AppDispatch, RootState } from '../../redux/store'
 
 const AdminOrders = () => {
   const { orders, isLoading, error } = useSelector((state: RootState) => state.orderReducer)
+
   const dispatch: AppDispatch = useDispatch()
+
   useEffect(() => {
     dispatch(fetchOrders())
   }, [])

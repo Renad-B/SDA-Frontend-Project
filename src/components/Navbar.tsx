@@ -10,10 +10,14 @@ import CartIcon from './CartIcon'
 const Navbar = () => {
   const { isLoggedIn, userData } = useSelector((state: RootState) => state.usersReducer)
   const { cartItems } = useSelector((state: RootState) => state.cartReducer)
+
   const dispatch: AppDispatch = useDispatch()
+
   const navigate = useNavigate()
+
   const handleLogout = () => {
     dispatch(logout())
+
     useEffect(() => {
       if (!isLoggedIn) {
         navigate('/')
