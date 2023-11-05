@@ -1,8 +1,10 @@
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+
 import { Link, useNavigate } from 'react-router-dom'
 import { AppDispatch, RootState } from '../redux/store'
+
 import { logout } from '../redux/slices/users/userSlice'
-import { useEffect } from 'react'
 import CartIcon from './CartIcon'
 
 const Navbar = () => {

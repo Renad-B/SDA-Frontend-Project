@@ -1,8 +1,10 @@
-import { useDispatch, useSelector } from 'react-redux'
-import UserSidebar from '../components/User/UserSidebar'
-import { AppDispatch, RootState } from '../redux/store'
 import { FormEvent, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
+import UserSidebar from '../components/User/UserSidebar'
+
 import { updateUser } from '../redux/slices/users/userSlice'
+import { AppDispatch, RootState } from '../redux/store'
 
 const UserProfile = () => {
   const dispatch: AppDispatch = useDispatch()

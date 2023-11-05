@@ -1,10 +1,12 @@
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { Product, fetchProducts, findProductById } from '../redux/slices/products/productSlice'
-import { AppDispatch, RootState } from '../redux/store'
 import { useDispatch, useSelector } from 'react-redux'
+
+import { Product, fetchProducts, findProductById } from '../redux/slices/products/productSlice'
 import { fetchCategory } from '../redux/slices/categories/categorySlice'
 import { addToCart } from '../redux/slices/Cart/cartSlice'
+
+import { AppDispatch, RootState } from '../redux/store'
 
 const ProductDetails = () => {
   const { id } = useParams()

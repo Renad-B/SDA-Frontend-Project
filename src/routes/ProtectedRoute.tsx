@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux'
 import { RootState } from '../redux/store'
 import { Outlet, useLocation } from 'react-router-dom'
+
 import Login from '../pages/Login'
 
 const ProtectedRoute = () => {

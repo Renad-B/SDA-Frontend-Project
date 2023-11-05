@@ -1,11 +1,14 @@
 import { ChangeEvent, useEffect, useState } from 'react'
-import { Product, fetchProducts, searchProduct } from '../redux/slices/products/productSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, RootState } from '../redux/store'
 import { Link } from 'react-router-dom'
+
+import { AppDispatch, RootState } from '../redux/store'
+
 import SortProducts from '../components/SortProducts'
 import SearchInput from '../components/SearchInput'
+
 import { fetchCategory } from '../redux/slices/categories/categorySlice'
+import { Product, fetchProducts, searchProduct } from '../redux/slices/products/productSlice'
 import { addToCart } from '../redux/slices/Cart/cartSlice'
 
 const Home = () => {

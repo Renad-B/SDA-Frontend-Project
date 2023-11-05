@@ -1,8 +1,9 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { AppDispatch, RootState } from '../redux/store'
+
 import { fetchUser, login } from '../redux/slices/users/userSlice'
+import { AppDispatch, RootState } from '../redux/store'
 
 const Login = ({ pathName }: { pathName: string }) => {
   const { users } = useSelector((state: RootState) => state.usersReducer)

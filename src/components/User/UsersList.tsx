@@ -1,8 +1,11 @@
-import { useDispatch, useSelector } from 'react-redux'
-import AdminSidebar from '../Admin/AdminSidebar'
-import { AppDispatch, RootState } from '../../redux/store'
 import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
+import AdminSidebar from '../Admin/AdminSidebar'
+
 import { banUser, deleteUser, fetchUser } from '../../redux/slices/users/userSlice'
+import { AppDispatch, RootState } from '../../redux/store'
+
 import Table from 'react-bootstrap/Table'
 
 const UsersList = () => {
