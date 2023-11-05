@@ -26,7 +26,6 @@ const UserProfile = () => {
     const updateUserData = { id: userData?.id, ...user }
     dispatch(updateUser(updateUserData))
   }
-  //why its not working the updating ?
   return (
     <div className="container">
       <UserSidebar />

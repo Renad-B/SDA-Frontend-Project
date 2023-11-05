@@ -5,7 +5,6 @@ const UserSidebar = () => {
     <aside className="sidebar">
       <div className="user/profile"></div>
       <h2>Menu</h2>
-      <p>Name: // how to add it</p>
       <ul>
         <li>
           <Link to="/dasboard/user/profile">Profile</Link>

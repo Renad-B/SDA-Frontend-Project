@@ -32,7 +32,6 @@ const Home = () => {
   const [itemsPerPage, setItemsPerPage] = useState(3)
 
   //pagination logic
-
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     const searchTerm = event.target.value
     console.log('Search term:', searchTerm)
@@ -40,7 +39,6 @@ const Home = () => {
   }
   const handleSelected = (categoryId: number) => {
     if (selectedCategory.includes(categoryId)) {
-      //remove
       const filterdCategory = selectedCategory.filter((category) => category !== categoryId)
       setSelectedCategory(filterdCategory)
     } else {
@@ -97,7 +95,6 @@ const Home = () => {
   }
 
   const handleAddToCart = (product: Product) => {
-    console.log(product)
     //add to cart
     dispatch(addToCart(product))
   }

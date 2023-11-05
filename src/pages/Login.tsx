@@ -38,7 +38,6 @@ const Login = ({ pathName }: { pathName: string }) => {
   }
 
   const handleSubmit = async (event: FormEvent) => {
-    console.log(users)
     event.preventDefault()
     try {
       const findUser = users.find((userData) => userData.email === user.email)
