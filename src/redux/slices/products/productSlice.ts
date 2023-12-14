@@ -5,7 +5,7 @@ import api from '../../../api'
 export const fetchProducts = createAsyncThunk('Products/fetchProducts', async () => {
   try {
     // const response = await api.get('/mock/e-commerce/products.json')
-    const response = await api.get('http://localhost:3001/api/products')
+    const response = await api.get('http://localhost:3002/api/products')
     console.log(response)
     return response.data
   } catch (error) {

@@ -2,7 +2,7 @@ import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 // import api from '../../../api'
 import axios from 'axios'
 
-const baseURL = 'http://localhost:3001/api'
+const baseURL = 'http://localhost:3002/api'
 
 export const fetchUser = createAsyncThunk('users/fetchUser', async () => {
   try {
