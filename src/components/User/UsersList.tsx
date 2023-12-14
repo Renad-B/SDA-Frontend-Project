@@ -50,19 +50,19 @@ const UsersList = () => {
               </thead>
               <tbody>
                 {users.map((user) => {
-                  if (user.role !== 'admin') {
+                  if (!user.isAdmin) {
                     return (
-                      <tr key={user.id}>
-                        <td>{`${user.firstName} ${user.lastName}`}</td>
+                      <tr key={user._id}>
+                        <td>{user.name}</td>
                         <td>{user.email}</td>
                         <td>{user.password}</td>
-                        <td>{user.role}</td>
+                        <td>{user.isAdmin}</td>
                         <td>
-                          <button className="btns" onClick={() => handleDelete(user.id)}>
+                          <button className="btns" onClick={() => handleDelete(user._id)}>
                             Delete
                           </button>
-                          <button className="btns" onClick={() => handleBan(user.id)}>
-                            {user.ban ? 'Unblock' : 'Block'}
+                          <button className="btns" onClick={() => handleBan(user._id)}>
+                            {user.isBanned ? 'Unblock' : 'Block'}
                           </button>
                         </td>
                       </tr>

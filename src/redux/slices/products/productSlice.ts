@@ -1,9 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import api from '../../../api'
 
+//what will happen ?
 export const fetchProducts = createAsyncThunk('Products/fetchProducts', async () => {
   try {
-    const response = await api.get('/mock/e-commerce/products.json')
+    // const response = await api.get('/mock/e-commerce/products.json')
+    const response = await api.get('http://localhost:3001/api/products')
+    console.log(response)
     return response.data
   } catch (error) {
     console.error('Error', error)

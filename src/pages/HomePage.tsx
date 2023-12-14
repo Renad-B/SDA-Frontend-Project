@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react'
+import { ChangeEvent, useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
@@ -15,6 +15,7 @@ const Home = () => {
   const { products, isLoading, error, searchTerm } = useSelector(
     (state: RootState) => state.productsReducer
   )
+
   const { categories } = useSelector((state: RootState) => state.categoriesReducer)
 
   const [selectedCategory, setSelectedCategory] = useState<number[]>([])
@@ -22,12 +23,12 @@ const Home = () => {
   const dispatch: AppDispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(fetchProducts())
-  }, [])
-
-  useEffect(() => {
+    // Fetch categories
     dispatch(fetchCategory())
-  }, [])
+
+    // Fetch products
+    dispatch(fetchProducts())
+  }, [dispatch]) // Added dependency array
 
   //The pagination here
   //current page, how many items per page
@@ -50,17 +51,32 @@ const Home = () => {
       })
     }
   }
+  // const filterProducts: Product[] = products.filter((product: Product) => {
+  //   const categoryMatch: boolean =
+  //     selectedCategory.length === 0 ||
+  //     selectedCategory.some((id: number) => product.categories.includes(id))
 
-  const filterProducts: Product[] = products.filter((product: Product) => {
-    const categoryMatch: boolean =
-      selectedCategory.length === 0 ||
-      selectedCategory.some((id: number) => product.categories.includes(id))
+  //   const searchMatch: boolean =
+  //     searchTerm === '' || product.name.toLowerCase().includes(searchTerm.toLowerCase())
 
-    const searchMatch: boolean =
-      searchTerm === '' || product.name.toLowerCase().includes(searchTerm.toLowerCase())
+  //   return categoryMatch && searchMatch
+  // })
 
-    return categoryMatch && searchMatch
-  })
+  //?so it work this way because array
+
+  const filterProducts: Product[] = Array.isArray(products)
+    ? products.filter((product: Product) => {
+        const categoryMatch: boolean =
+          selectedCategory.length === 0 ||
+          selectedCategory.some((id: number) => product.categories.includes(id))
+
+        const searchMatch: boolean =
+          searchTerm === '' || product.name.toLowerCase().includes(searchTerm.toLowerCase())
+
+        return categoryMatch && searchMatch
+      })
+    : []
+
   //pagination logic
   const indexOfLastItem = currentPage * itemsPerPage
   const indexOfFirstItem = indexOfLastItem - itemsPerPage
@@ -96,6 +112,10 @@ const Home = () => {
   if (error) {
     return <p> {error}...</p>
   }
+  //so in this clg it dosent show product but when im inside it it show ?
+  console.log('Products:', products)
+  console.log('Filter Products:', filterProducts)
+  console.log('Current Items:', currentItems)
 
   const handleAddToCart = (product: Product) => {
     //add to cart
@@ -111,6 +131,7 @@ const Home = () => {
             <div>
               {categories.length > 0 &&
                 categories.map((category) => {
+                  console.log('Products:', products)
                   return (
                     <div key={category.id}>
                       <label htmlFor="category" key={category.id}>
@@ -139,6 +160,8 @@ const Home = () => {
               <div className="products">
                 {currentItems.length > 0 &&
                   currentItems.map((product: Product) => {
+                    //why it stopped showing
+                    console.log('Products:', products)
                     return (
                       <article key={product.id} className="product">
                         <img src={product.image} alt="product img" />

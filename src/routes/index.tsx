@@ -31,19 +31,19 @@ const Router = () => {
         <Route path="/dasboard/register" element={<Register />} />
         <Route path="/productinfo" element={<ProductDetails />} />
 
-        <Route path="/dasboard" element={<ProtectedRoute />}>
-          <Route path="user" element={<UserDashboard />} />
-          <Route path="user/profile" element={<UserProfile />} />
-          <Route path="user/orders" element={<UserOrders />} />
-        </Route>
+        {/* <Route path="/dasboard" element={<ProtectedRoute />}> */}
+        <Route path="user" element={<UserDashboard />} />
+        <Route path="user/profile" element={<UserProfile />} />
+        <Route path="user/orders" element={<UserOrders />} />
+        {/* </Route> */}
 
-        <Route path="/dasboard" element={<AdminRoute />}>
-          <Route path="admin" element={<AdminDashboard />} />
-          <Route path="admin/catgeory" element={<Category />} />
-          <Route path="admin/products" element={<Products />} />
-          <Route path="admin/orders" element={<AdminOrders />} />
-          <Route path="admin/users" element={<UserList />} />
-        </Route>
+        {/* <Route path="/dasboard" element={<AdminRoute />}> */}
+        <Route path="admin" element={<AdminDashboard />} />
+        <Route path="admin/catgeory" element={<Category />} />
+        <Route path="admin/products" element={<Products />} />
+        <Route path="admin/orders" element={<AdminOrders />} />
+        <Route path="admin/users" element={<UserList />} />
+        {/* </Route> */}
 
         <Route path="*" element={<Error />} />
       </Routes>

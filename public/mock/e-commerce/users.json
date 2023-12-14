@@ -25,5 +25,14 @@
     "password": "hashed_password",
     "role": "user",
     "ban": false
+  },
+  {
+    "id": 4,
+    "firstName": "Rwed",
+    "lastName": "Meow",
+    "email": "rwed@gmail.com",
+    "password": "11111111111",
+    "role": "admin",
+    "ban": false
   }
 ]

@@ -1,10 +1,14 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import api from '../../../api'
+// import api from '../../../api'
+import axios from 'axios'
+
+const baseURL = 'http://localhost:3001/api'
 
 export const fetchUser = createAsyncThunk('users/fetchUser', async () => {
   try {
-    const response = await api.get('/mock/e-commerce/users.json')
-    return response.data
+    const response = await axios.get(`${baseURL}/users`)
+    console.log(response.data.payload.users)
+    return response.data.payload.users
   } catch (error) {
     console.error('Error', error)
     throw error // Re-throw the error to be caught by the component
@@ -12,13 +16,15 @@ export const fetchUser = createAsyncThunk('users/fetchUser', async () => {
 })
 
 export type User = {
-  id: number
-  firstName: string
-  lastName: string
+  _id: number
+  name: string
   email: string
+  image: string
   password: string
-  role: string
-  ban: boolean
+  address: string
+  phone: string
+  isAdmin: string
+  isBanned: boolean
 }
 
 export type UserState = {
@@ -55,28 +61,28 @@ export const userSlice = createSlice({
     logout: (state) => {
       state.isLoggedIn = false
       state.userData = null
-      localStorage.setItem('userData', JSON.stringify(state))
+      // localStorage.setItem('userData', JSON.stringify(state))
+      localStorage.removeItem('userData')
     },
     deleteUser: (state, action) => {
-      const filterUsers = state.users.filter((user) => user.id !== action.payload)
+      const filterUsers = state.users.filter((user) => user._id !== action.payload)
       state.users = filterUsers
     },
     banUser: (state, action) => {
       const id = action.payload
-      const findUser = state.users.find((user) => user.id === id)
+      const findUser = state.users.find((user) => user._id === id)
       if (findUser) {
-        findUser.ban = !findUser.ban
+        findUser.isBanned = !findUser.isBanned
       }
     },
     addUser: (state, action) => {
       state.users.push(action.payload)
     },
     updateUser: (state, action) => {
-      const { id, firstName, lastName } = action.payload
-      const findUser = state.users.find((user) => user.id === id)
+      const { id, firstName } = action.payload
+      const findUser = state.users.find((user) => user._id === id)
       if (findUser) {
-        findUser.firstName = firstName
-        findUser.lastName = lastName
+        findUser.name = firstName
         state.userData = findUser
         localStorage.setItem('userData', JSON.stringify(state))
       }
