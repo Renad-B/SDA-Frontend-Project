@@ -3,7 +3,14 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import AdminSidebar from '../Admin/AdminSidebar'
 
-import { banUser, deleteUser, fetchUser, searchUser } from '../../redux/slices/users/userSlice'
+import {
+  banUser,
+  baseURL,
+  deleteUser,
+  fetchUser,
+  searchUser,
+  unbanUser
+} from '../../redux/slices/users/userSlice'
 import { AppDispatch, RootState } from '../../redux/store'
 
 import Table from 'react-bootstrap/Table'
@@ -40,20 +47,29 @@ const UsersList = () => {
     dispatch(fetchUser())
   }
 
-  const handleBanUnban = async (id: string) => {
-    await banUser(id)
-    await banUser(id)
+  const handleBanUnban = async (id: string, isBanned: boolean) => {
+    try {
+      const response = isBanned ? await unbanUser(id) : await banUser(id)
+      //give a toast
+      console.log(response)
+      //why its not working ?
+      dispatch(fetchUser())
+      //response or toast message
+    } catch (error) {
+      console.log(error.response?.data.messgae || error.messgae)
+    }
   }
-
   //! user search functionality
-
+  //!user image
+  //why i should refresh ?
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
     dispatch(searchUser(event.target.value))
   }
-  const userSearch = searchTerm
-    ? users.filter((user) => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
-    : users
+
+  // const userSearch = searchTerm
+  //   ? users.filter((user) => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
+  //   : users
 
   return (
     <div className="container">
@@ -75,17 +91,22 @@ const UsersList = () => {
               <tbody>
                 {users.map((user) => {
                   if (!user.isAdmin) {
+                    console.log(user.image)
                     return (
                       <tr key={user._id}>
                         <td>{user.name}</td>
                         <td>{user.email}</td>
-                        <td>{user.image}</td>
+                        <td>
+                          <img src={`${baseURL}/${user.image}`} alt={user.image} />
+                        </td>
                         <td>
                           <button className="btns" onClick={() => handleDelete(user._id)}>
                             Delete
                           </button>
-                          <button className="btns" onClick={() => handleBanUnban(user._id)}>
-                            {user.isBanned ? 'Unblock' : 'Block'}
+                          <button
+                            className="btns"
+                            onClick={() => handleBanUnban(user._id, user.isBanned)}>
+                            {user.isBanned ? 'unban' : 'ban'}
                           </button>
                         </td>
                       </tr>

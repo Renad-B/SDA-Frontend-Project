@@ -67,8 +67,10 @@ export const productSlice = createSlice({
       } else if (sortingCriteria === 'price') state.products.sort((a, b) => a.price - b.price)
     },
     deleteProduct: (state, action) => {
-      const filterCategory = state.products.filter((category) => category.id !== action.payload)
-      state.products = filterCategory
+      //!So how to make it work
+      axios.delete(`http://localhost:3002/api/products/${action.payload}`)
+      window.location.reload()
+      fetchProducts()
     },
     addProduct: (state, action) => {
       state.products.push(action.payload)

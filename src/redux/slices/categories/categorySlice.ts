@@ -42,6 +42,7 @@ export const categorySlice = createSlice({
   initialState,
   reducers: {
     deleteCategory: (state, action) => {
+      //its not working
       axios.delete(`http://localhost:3002/api/categories/${action.payload}`)
       window.location.reload()
       fetchCategory()

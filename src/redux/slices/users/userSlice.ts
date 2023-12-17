@@ -28,8 +28,8 @@ export const deleteUser = async (id: string) => {
 
 export const banUser = async (id: string) => {
   try {
-    const response = await axios.put(`${baseURL}/users/${id}`)
-    console.log(response.data.payload.users)
+    const response = await axios.put(`${baseURL}/users/ban/${id}`)
+    fetchUser()
     return response.data
   } catch (error) {
     console.error('Error', error)
@@ -38,8 +38,8 @@ export const banUser = async (id: string) => {
 }
 export const unbanUser = async (id: string) => {
   try {
-    const response = await axios.put(`${baseURL}/users/${id}`)
-    console.log(response.data.payload.users)
+    const response = await axios.put(`${baseURL}/users/unban/${id}`)
+    fetchUser()
     return response.data
   } catch (error) {
     console.error('Error', error)
