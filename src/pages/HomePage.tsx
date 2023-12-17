@@ -18,7 +18,7 @@ const Home = () => {
 
   const { categories } = useSelector((state: RootState) => state.categoriesReducer)
 
-  const [selectedCategory, setSelectedCategory] = useState<number[]>([])
+  const [selectedCategory, setSelectedCategory] = useState<string[]>([])
 
   const dispatch: AppDispatch = useDispatch()
 
@@ -41,41 +41,41 @@ const Home = () => {
     console.log('Search term:', searchTerm)
     dispatch(searchProduct(searchTerm))
   }
-  const handleSelected = (categoryId: number) => {
-    if (selectedCategory.includes(categoryId)) {
-      const filterdCategory = selectedCategory.filter((category) => category !== categoryId)
+  const handleSelected = (category: string) => {
+    if (selectedCategory.includes(category)) {
+      const filterdCategory = selectedCategory.filter((category) => category !== category)
       setSelectedCategory(filterdCategory)
     } else {
       setSelectedCategory((prevState) => {
-        return [...prevState, categoryId]
+        return [...prevState, category]
       })
     }
   }
-  // const filterProducts: Product[] = products.filter((product: Product) => {
-  //   const categoryMatch: boolean =
-  //     selectedCategory.length === 0 ||
-  //     selectedCategory.some((id: number) => product.categories.includes(id))
+  const filterProducts: Product[] = products.filter((product: Product) => {
+    const categoryMatch: boolean =
+      selectedCategory.length === 0 ||
+      selectedCategory.some((id: string) => product.categoryId.includes(id))
 
-  //   const searchMatch: boolean =
-  //     searchTerm === '' || product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    const searchMatch: boolean =
+      searchTerm === '' || product.name.toLowerCase().includes(searchTerm.toLowerCase())
 
-  //   return categoryMatch && searchMatch
-  // })
+    return categoryMatch && searchMatch
+  })
 
   //?so it work this way because array
 
-  const filterProducts: Product[] = Array.isArray(products)
-    ? products.filter((product: Product) => {
-        const categoryMatch: boolean =
-          selectedCategory.length === 0 ||
-          selectedCategory.some((id: number) => product.categories.includes(id))
+  // const filterProducts: Product[] = Array.isArray(products)
+  //   ? products.filter((product: Product) => {
+  //       const categoryMatch: boolean =
+  //         selectedCategory.length === 0 ||
+  //         selectedCategory.some((id: string) => product.categories.includes(id))
 
-        const searchMatch: boolean =
-          searchTerm === '' || product.name.toLowerCase().includes(searchTerm.toLowerCase())
+  //       const searchMatch: boolean =
+  //         searchTerm === '' || product.name.toLowerCase().includes(searchTerm.toLowerCase())
 
-        return categoryMatch && searchMatch
-      })
-    : []
+  //       return categoryMatch && searchMatch
+  //     })
+  //   : []
 
   //pagination logic
   const indexOfLastItem = currentPage * itemsPerPage
@@ -112,10 +112,6 @@ const Home = () => {
   if (error) {
     return <p> {error}...</p>
   }
-  //so in this clg it dosent show product but when im inside it it show ?
-  console.log('Products:', products)
-  console.log('Filter Products:', filterProducts)
-  console.log('Current Items:', currentItems)
 
   const handleAddToCart = (product: Product) => {
     //add to cart
@@ -129,18 +125,18 @@ const Home = () => {
           <div className="sidebar">
             <h2>Filter by Category</h2>
             <div>
-              {categories.length > 0 &&
+              {categories &&
+                categories.length > 0 &&
                 categories.map((category) => {
-                  console.log('Products:', products)
                   return (
-                    <div key={category.id}>
-                      <label htmlFor="category" key={category.id}>
+                    <div key={category._id}>
+                      <label htmlFor="category" key={category._id}>
                         <input
                           type="checkbox"
                           name="category"
                           value={category.name}
                           onChange={() => {
-                            handleSelected(category.id)
+                            handleSelected(category._id)
                           }}
                         />
                         {category.name}
@@ -160,11 +156,9 @@ const Home = () => {
               <div className="products">
                 {currentItems.length > 0 &&
                   currentItems.map((product: Product) => {
-                    //why it stopped showing
-                    console.log('Products:', products)
                     return (
                       <article key={product.id} className="product">
-                        <img src={product.image} alt="product img" />
+                        {/* <img src={`${baseURLProduct}/${product.image}`} alt="product img" /> */}
                         <p>Name: {product.name}</p>
                         <p>Description: {product.description}</p>
                         <p>Price: {product.price} $</p>
@@ -174,7 +168,7 @@ const Home = () => {
                           }}>
                           Add to cart{' '}
                         </button>
-                        <Link to={`/products/${product.id}`}>
+                        <Link to={`/products/${product.slug}`}>
                           <button>Show details </button>
                         </Link>
                       </article>

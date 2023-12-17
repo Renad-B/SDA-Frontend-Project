@@ -1,27 +1,33 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import api from '../../../api'
+// import api from '../../../api'
+import axios from 'axios'
+import { Category } from '../categories/categorySlice'
 
+const baseURLProduct = 'http://localhost:3002/api'
 //what will happen ?
 export const fetchProducts = createAsyncThunk('Products/fetchProducts', async () => {
   try {
     // const response = await api.get('/mock/e-commerce/products.json')
-    const response = await api.get('http://localhost:3002/api/products')
-    console.log(response)
-    return response.data
+    const response = await axios.get(`${baseURLProduct}/products`)
+    console.log('Fetched Products:', response.data.payload)
+    return response.data.payload.products
   } catch (error) {
     console.error('Error', error)
   }
 })
 
 export type Product = {
-  id: number
   name: string
-  image: string
-  description: string
-  categories: number[]
-  variants: string[]
-  sizes: string[]
+  slug: string
   price: number
+  image: string
+  quantity: number
+  sold: number
+  shipping: number
+  description: string
+  createdAt?: string
+  updatedAt?: string
+  categoryId: Category['_id']
 }
 
 export type ProductState = {
@@ -48,7 +54,7 @@ export const productSlice = createSlice({
       state.searchTerm = action.payload
     },
     findProductById: (state, action) => {
-      const id = action.payload
+      const { id } = action.payload
       const foundProduct = state.products.find((product) => product.id === id)
       if (foundProduct) {
         state.singleProduct = foundProduct

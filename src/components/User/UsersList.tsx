@@ -1,15 +1,18 @@
-import { useEffect } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import AdminSidebar from '../Admin/AdminSidebar'
 
-import { banUser, deleteUser, fetchUser } from '../../redux/slices/users/userSlice'
+import { banUser, deleteUser, fetchUser, searchUser } from '../../redux/slices/users/userSlice'
 import { AppDispatch, RootState } from '../../redux/store'
 
 import Table from 'react-bootstrap/Table'
+import SearchInput from '../SearchInput'
 
 const UsersList = () => {
   const { users, isLoading, error } = useSelector((state: RootState) => state.usersReducer)
+  //!fix it later
+  const [searchTerm, setSearchTerm] = useState('')
 
   const dispatch: AppDispatch = useDispatch()
 
@@ -24,28 +27,49 @@ const UsersList = () => {
     return <p> {error}...</p>
   }
 
-  const handleDelete = (id: number) => {
-    dispatch(deleteUser(id))
+  //why it give me error in the console but works ?
+  const handleDelete = async (id: string) => {
+    try {
+      const response = await deleteUser(id)
+      //see if you can use toast
+      dispatch(fetchUser())
+    } catch (error) {
+      console.log(error.response?.data.messgae || error.messgae)
+    }
+    //re fetch
+    dispatch(fetchUser())
   }
 
-  const handleBan = (id: number) => {
-    dispatch(banUser(id))
+  const handleBanUnban = async (id: string) => {
+    await banUser(id)
+    await banUser(id)
   }
+
+  //! user search functionality
+
+  const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value)
+    dispatch(searchUser(event.target.value))
+  }
+  const userSearch = searchTerm
+    ? users.filter((user) => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
+    : users
+
   return (
     <div className="container">
       <AdminSidebar />
       <div className="main-content">
         <h2>List of users: </h2>
         <section className="users">
+          <SearchInput searchTerm={searchTerm} handleSearch={handleSearch} />
           {users.length > 0 && (
             <Table striped bordered hover>
               <thead>
                 <tr>
                   <th>Name</th>
                   <th>Email</th>
-                  <th>Password</th>
-                  <th>Role</th>
-                  <th>Action</th>
+                  <th>User picture</th>
+                  <th>Options</th>
                 </tr>
               </thead>
               <tbody>
@@ -55,13 +79,12 @@ const UsersList = () => {
                       <tr key={user._id}>
                         <td>{user.name}</td>
                         <td>{user.email}</td>
-                        <td>{user.password}</td>
-                        <td>{user.isAdmin}</td>
+                        <td>{user.image}</td>
                         <td>
                           <button className="btns" onClick={() => handleDelete(user._id)}>
                             Delete
                           </button>
-                          <button className="btns" onClick={() => handleBan(user._id)}>
+                          <button className="btns" onClick={() => handleBanUnban(user._id)}>
                             {user.isBanned ? 'Unblock' : 'Block'}
                           </button>
                         </td>

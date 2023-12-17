@@ -31,14 +31,14 @@ const Category = () => {
   if (error) {
     return <p> {error}...</p>
   }
-  const handleDelete = (id: number) => {
-    dispatch(deleteCategory(id))
+  const handleDelete = (slug: string) => {
+    dispatch(deleteCategory(slug))
   }
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value
     setCategoryName(value)
   }
-  const handleEditing = (id: number, name: string) => {
+  const handleEditing = (id: string, name: string) => {
     setCategoryId(id)
     setIsEditing(!isEditing)
     setCategoryName(name)
@@ -87,7 +87,7 @@ const Category = () => {
                 </button>
                 <button
                   onClick={() => {
-                    handleDelete(category.id)
+                    handleDelete(category.slug)
                   }}>
                   Delete
                 </button>

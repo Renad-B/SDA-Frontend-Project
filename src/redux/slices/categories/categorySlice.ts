@@ -1,18 +1,28 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import api from '../../../api'
+import axios from 'axios'
 
 export const fetchCategory = createAsyncThunk('users/fetchCategory', async () => {
   try {
-    const response = await api.get('/mock/e-commerce/categories.json')
-    return response.data
+    const response = await api.get('http://localhost:3002/api/categories')
+    console.log('Fetch Category', response.data.payload)
+    // Assuming the response structure is { message: 'all categories are returned', categories: [...] }
+    const categories = response.data.payload
+
+    return categories
+    // return response.data
   } catch (error) {
     console.error('Error', error)
   }
 })
 
 export type Category = {
-  id: number
+  _id: string
   name: string
+  slug: string
+  createdAt?: string
+  updatedAt?: string
+  __v: number
 }
 
 export type CategoryState = {
@@ -32,15 +42,16 @@ export const categorySlice = createSlice({
   initialState,
   reducers: {
     deleteCategory: (state, action) => {
-      const filterCategory = state.categories.filter((category) => category.id !== action.payload)
-      state.categories = filterCategory
+      axios.delete(`http://localhost:3002/api/categories/${action.payload}`)
+      window.location.reload()
+      fetchCategory()
     },
     addCategory: (state, action) => {
       state.categories.push(action.payload)
     },
     updateCategory: (state, action) => {
       const { id, name } = action.payload
-      const findCategory = state.categories.find((category) => category.id === id)
+      const findCategory = state.categories.find((category) => category._id === id)
       if (findCategory) {
         findCategory.name = name
       }
@@ -53,8 +64,8 @@ export const categorySlice = createSlice({
         state.error = null
       })
       .addCase(fetchCategory.fulfilled, (state, action) => {
-        state.isLoading = false
         state.categories = action.payload
+        state.isLoading = false
       })
       .addCase(fetchCategory.rejected, (state, action) => {
         state.isLoading = false

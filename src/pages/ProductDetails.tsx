@@ -27,7 +27,7 @@ const ProductDetails = () => {
   }
 
   useEffect(() => {
-    dispatch(fetchProducts()).then(() => dispatch(findProductById(Number(id))))
+    dispatch(fetchProducts()).then(() => dispatch(findProductById(String(id))))
     dispatch(fetchCategory())
   }, [id])
 
@@ -37,8 +37,8 @@ const ProductDetails = () => {
   if (error) {
     return <p> {error}...</p>
   }
-  const getCategoryNameById = (categoryId: number) => {
-    const category = categories.find((category) => category.id === categoryId)
+  const getCategoryNameById = (categoryId: string) => {
+    const category = categories.find((category) => category._id === categoryId)
     return category ? category.name : 'Category not found'
   }
   return (
@@ -49,17 +49,12 @@ const ProductDetails = () => {
           {singleProduct && (
             <>
               <img src={singleProduct.image} alt="product img" />
-              <h2>Name: {singleProduct.name}</h2>
-              <h3>Price: {singleProduct.price} $</h3>
+              <h5>Name: {singleProduct.name}</h5>
+              <h5>Price: {singleProduct.price} $</h5>
               <p>Description: {singleProduct.description}</p>
-              <p>
-                Categories:{' '}
-                {singleProduct.categories &&
-                  singleProduct.categories
-                    .map((categoryId) => getCategoryNameById(categoryId))
-                    .join(', ')}
-              </p>
-              <p>Size: {singleProduct.sizes && singleProduct.sizes.join(', ')}</p>
+              <p>Shipping: {singleProduct.shipping}</p>
+              <p>Quanity: {singleProduct.quantity}</p>
+              <p>Category: {singleProduct.categoryId}</p>
               <button
                 className="btns"
                 onClick={() => {

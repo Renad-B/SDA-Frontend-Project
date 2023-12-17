@@ -2,7 +2,7 @@ import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 // import api from '../../../api'
 import axios from 'axios'
 
-const baseURL = 'http://localhost:3002/api'
+export const baseURL = 'http://localhost:3002/api'
 
 export const fetchUser = createAsyncThunk('users/fetchUser', async () => {
   try {
@@ -11,12 +11,44 @@ export const fetchUser = createAsyncThunk('users/fetchUser', async () => {
     return response.data.payload.users
   } catch (error) {
     console.error('Error', error)
-    throw error // Re-throw the error to be caught by the component
+    throw error
   }
 })
 
+export const deleteUser = async (id: string) => {
+  try {
+    const response = await axios.delete(`${baseURL}/users/${id}`)
+    console.log(response.data.payload.users)
+    return response.data
+  } catch (error) {
+    console.error('Error', error)
+    throw error
+  }
+}
+
+export const banUser = async (id: string) => {
+  try {
+    const response = await axios.put(`${baseURL}/users/${id}`)
+    console.log(response.data.payload.users)
+    return response.data
+  } catch (error) {
+    console.error('Error', error)
+    throw error
+  }
+}
+export const unbanUser = async (id: string) => {
+  try {
+    const response = await axios.put(`${baseURL}/users/${id}`)
+    console.log(response.data.payload.users)
+    return response.data
+  } catch (error) {
+    console.error('Error', error)
+    throw error
+  }
+}
+
 export type User = {
-  _id: number
+  _id: string
   name: string
   email: string
   image: string
@@ -25,6 +57,7 @@ export type User = {
   phone: string
   isAdmin: string
   isBanned: boolean
+  searchTerm: ''
 }
 
 export type UserState = {
@@ -34,6 +67,7 @@ export type UserState = {
   isLoggedIn: boolean
   userData: User | null
   ban: boolean
+  searchTerm: ''
 }
 
 //set the data in local storge using JSON
@@ -46,7 +80,8 @@ const initialState: UserState = {
   isLoading: false,
   isLoggedIn: userData?.isLoggedIn ?? false,
   userData: userData?.userData ?? null,
-  ban: false
+  ban: false,
+  searchTerm: ''
 }
 
 export const userSlice = createSlice({
@@ -64,16 +99,12 @@ export const userSlice = createSlice({
       // localStorage.setItem('userData', JSON.stringify(state))
       localStorage.removeItem('userData')
     },
-    deleteUser: (state, action) => {
-      const filterUsers = state.users.filter((user) => user._id !== action.payload)
-      state.users = filterUsers
-    },
-    banUser: (state, action) => {
-      const id = action.payload
-      const findUser = state.users.find((user) => user._id === id)
-      if (findUser) {
-        findUser.isBanned = !findUser.isBanned
-      }
+    searchUser: (state, action) => {
+      state.searchTerm = action.payload
+      // Filter users based on the search term
+      state.users = state.users.filter((user) =>
+        user.name.toLowerCase().includes(action.payload.toLowerCase())
+      )
     },
     addUser: (state, action) => {
       state.users.push(action.payload)
@@ -105,5 +136,5 @@ export const userSlice = createSlice({
   }
 })
 
-export const { login, logout, deleteUser, banUser, addUser, updateUser } = userSlice.actions
+export const { login, logout, addUser, updateUser, searchUser } = userSlice.actions
 export default userSlice.reducer
