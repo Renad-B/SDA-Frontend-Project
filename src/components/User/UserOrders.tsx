@@ -30,11 +30,13 @@ const UserOrders = () => {
           {orders.length > 0 &&
             orders.map((order) => {
               return (
-                <article key={order.id} className="order">
-                  <p>ID: {order.id}</p>
-                  <p>Proudct ID:{order.productId}</p>
-                  <p>Purchaes time:{order.purchasedAt}</p>
-                  <p>User ID:{order.userId}</p>
+                <article key={order._id} className="order">
+                  <p>ID: {order._id}</p>
+                  <p>Proudct ID:{order.product}</p>
+                  <p> Shipping Addres:{order.shippingAddress}</p>
+                  <p> Shipping status:{order.status}</p>
+                  <p> Shipping Total Amount:{order.totalAmount}</p>
+                  <p> Quantity:{order.quantity}</p>
                 </article>
               )
             })}

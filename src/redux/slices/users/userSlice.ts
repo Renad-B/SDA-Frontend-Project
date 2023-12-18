@@ -1,8 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-// import api from '../../../api'
 import axios from 'axios'
 
-export const baseURL = 'http://localhost:3002/api'
+import { baseURL } from '../../../services/UserService'
 
 export const fetchUser = createAsyncThunk('users/fetchUser', async () => {
   try {
@@ -10,42 +9,9 @@ export const fetchUser = createAsyncThunk('users/fetchUser', async () => {
     console.log(response.data.payload.users)
     return response.data.payload.users
   } catch (error) {
-    console.error('Error', error)
-    throw error
+    throw new Error('falied to fetch user')
   }
 })
-
-export const deleteUser = async (id: string) => {
-  try {
-    const response = await axios.delete(`${baseURL}/users/${id}`)
-    console.log(response.data.payload.users)
-    return response.data
-  } catch (error) {
-    console.error('Error', error)
-    throw error
-  }
-}
-
-export const banUser = async (id: string) => {
-  try {
-    const response = await axios.put(`${baseURL}/users/ban/${id}`)
-    fetchUser()
-    return response.data
-  } catch (error) {
-    console.error('Error', error)
-    throw error
-  }
-}
-export const unbanUser = async (id: string) => {
-  try {
-    const response = await axios.put(`${baseURL}/users/unban/${id}`)
-    fetchUser()
-    return response.data
-  } catch (error) {
-    console.error('Error', error)
-    throw error
-  }
-}
 
 export type User = {
   _id: string

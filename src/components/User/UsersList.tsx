@@ -3,18 +3,13 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import AdminSidebar from '../Admin/AdminSidebar'
 
-import {
-  banUser,
-  baseURL,
-  deleteUser,
-  fetchUser,
-  searchUser,
-  unbanUser
-} from '../../redux/slices/users/userSlice'
+import { fetchUser, searchUser } from '../../redux/slices/users/userSlice'
 import { AppDispatch, RootState } from '../../redux/store'
 
 import Table from 'react-bootstrap/Table'
 import SearchInput from '../SearchInput'
+
+import { banUser, baseURL, deleteUser, unbanUser } from '../../services/UserService'
 
 const UsersList = () => {
   const { users, isLoading, error } = useSelector((state: RootState) => state.usersReducer)
@@ -38,6 +33,7 @@ const UsersList = () => {
   const handleDelete = async (id: string) => {
     try {
       const response = await deleteUser(id)
+      // alert('success deleted user')
       //see if you can use toast
       dispatch(fetchUser())
     } catch (error) {

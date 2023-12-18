@@ -17,6 +17,7 @@ import ProtectedRoute from './ProtectedRoute'
 import AdminRoute from './AdminRoute'
 import Register from '../pages/Register'
 import Cart from '../pages/Cart'
+import { ActivateUser } from '../pages/ActivateUser'
 
 const Router = () => {
   return (
@@ -30,6 +31,7 @@ const Router = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/dasboard/register" element={<Register />} />
         <Route path="/productinfo" element={<ProductDetails />} />
+        <Route path="/users/activate/:token" element={<ActivateUser />} />
 
         {/* <Route path="/dasboard" element={<ProtectedRoute />}> */}
         <Route path="user" element={<UserDashboard />} />
