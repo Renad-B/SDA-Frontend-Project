@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { AppDispatch, RootState } from '../redux/store'
 
-import { logout } from '../redux/slices/users/userSlice'
+// import { logout } from '../redux/slices/users/userSlice'
 import CartIcon from './CartIcon'
+import { logoutUser } from '../services/UserService'
 
 const Navbar = () => {
   const { isLoggedIn, userData } = useSelector((state: RootState) => state.usersReducer)
@@ -16,7 +17,7 @@ const Navbar = () => {
   const navigate = useNavigate()
 
   const handleLogout = () => {
-    dispatch(logout())
+    dispatch(logoutUser())
 
     useEffect(() => {
       if (!isLoggedIn) {

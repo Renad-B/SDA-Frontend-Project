@@ -15,15 +15,19 @@ export const createUser = createAsyncThunk('users/createUser', async (newUser: F
   }
 })
 
-export const activateUserAccount = async (token: string) => {
-  try {
-    const response = await axios.post(`${baseURL}/users/activate`, { token })
-    console.log(response.data.payload.users)
-    return response.data
-  } catch (error) {
-    throw new Error('Failed to activate user')
+export const activateUserAccount = createAsyncThunk(
+  'users/activateUserAccount',
+  async (token: string) => {
+    try {
+      const response = await axios.post(`${baseURL}/users/activate`, { token })
+      // console.log(response.data.payload.users)
+      return response.data
+    } catch (error) {
+      console.error(error)
+      throw new Error('Failed to activate user')
+    }
   }
-}
+)
 
 export const deleteUser = async (id: string) => {
   try {
@@ -54,3 +58,22 @@ export const unbanUser = async (id: string) => {
     throw new Error('Falied to unband user')
   }
 }
+
+export const loginUser = createAsyncThunk('user/loginUser', async (user: object) => {
+  try {
+    const response = await axios.post(`${baseURL}/auth/login`, user)
+    console.log(response)
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+export const logoutUser = createAsyncThunk('user/logoutUser', async () => {
+  try {
+    const response = await axios.post(`${baseURL}/auth/logout`)
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
+})

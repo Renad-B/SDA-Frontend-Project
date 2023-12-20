@@ -1,28 +1,27 @@
-import React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import jwtDecode from 'jwt-decode'
 import { activateUserAccount } from '../services/UserService'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../redux/store'
 
 export const ActivateUser = () => {
-  const { token } = useParams()
+  const { token } = useParams<string>()
   const decoded = jwtDecode(String(token))
   console.log(token)
   console.log(decoded)
   const navigate = useNavigate()
+  const dispatch: AppDispatch = useDispatch()
 
   const handleActivateUser = async () => {
     //make req to api with token
 
     try {
-      const response = await activateUserAccount(token)
-      console.log(response)
+      dispatch(activateUserAccount(token))
+
       // if is successful then set the user to the login page
-      //!dont forget to do the login page
       navigate('/dasboard/login')
     } catch (error) {
-      // throw new Error('Cant activate the user')
-      //! when i use the throw error it wont work why ?
-      console.log(error)
+      throw new Error('Cant activate the user')
     }
   }
 

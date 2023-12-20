@@ -2,9 +2,10 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 // import api from '../../../api'
 import axios from 'axios'
 import { Category } from '../categories/categorySlice'
+import { setSingleProduct } from '../../../services/ProductService'
 
 const baseURLProduct = 'http://localhost:3002/api'
-//what will happen ?
+
 export const fetchProducts = createAsyncThunk('Products/fetchProducts', async () => {
   try {
     // const response = await api.get('/mock/e-commerce/products.json')
@@ -12,11 +13,13 @@ export const fetchProducts = createAsyncThunk('Products/fetchProducts', async ()
     console.log('Fetched Products:', response.data.payload)
     return response.data.payload.products
   } catch (error) {
-    console.error('Error', error)
+    throw new Error('cant reash products')
   }
 })
 
 export type Product = {
+  category: string
+  _id: string
   name: string
   slug: string
   price: number
@@ -27,7 +30,8 @@ export type Product = {
   description: string
   createdAt?: string
   updatedAt?: string
-  categoryId: Category['_id']
+  //to think about it
+  categories: number[]
 }
 
 export type ProductState = {
@@ -53,24 +57,21 @@ export const productSlice = createSlice({
     searchProduct: (state, action) => {
       state.searchTerm = action.payload
     },
-    findProductById: (state, action) => {
-      const { id } = action.payload
-      const foundProduct = state.products.find((product) => product.id === id)
-      if (foundProduct) {
-        state.singleProduct = foundProduct
+    findBySlug: (state, action) => {
+      const { slug } = action.payload
+      const foundSingleProduct = state.products.find((product) => product.slug === slug)
+      if (foundSingleProduct) {
+        state.singleProduct = foundSingleProduct
       }
     },
     sortProducts: (state, action) => {
-      const sortingCriteria = action.payload
-      if (sortingCriteria === 'category') {
-        state.products.sort((a, b) => a.name.localeCompare(b.name))
-      } else if (sortingCriteria === 'price') state.products.sort((a, b) => a.price - b.price)
-    },
-    deleteProduct: (state, action) => {
-      //!So how to make it work
-      axios.delete(`http://localhost:3002/api/products/${action.payload}`)
-      window.location.reload()
-      fetchProducts()
+      const sorting = action.payload
+      console.log(sorting)
+      if (sorting === 'category') {
+        state.products.sort((a, b) => a.categoreis[0] - b.categoreis[0])
+      } else if (sorting === 'price') {
+        state.products.sort((a, b) => a.price - b.price)
+      }
     },
     addProduct: (state, action) => {
       state.products.push(action.payload)
@@ -99,14 +100,11 @@ export const productSlice = createSlice({
         state.isLoading = false
         state.error = action.error.message || 'An error occurred'
       })
+      .addCase(setSingleProduct, (state, action) => {
+        state.singleProduct = action.payload
+      })
   }
 })
-export const {
-  findProductById,
-  searchProduct,
-  sortProducts,
-  deleteProduct,
-  addProduct,
-  updateProduct
-} = productSlice.actions
+export const { searchProduct, sortProducts, addProduct, updateProduct, findBySlug } =
+  productSlice.actions
 export default productSlice.reducer

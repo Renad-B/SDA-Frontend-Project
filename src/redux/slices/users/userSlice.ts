@@ -1,7 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
-import { baseURL } from '../../../services/UserService'
+import { baseURL, loginUser, logoutUser } from '../../../services/UserService'
 
 export const fetchUser = createAsyncThunk('users/fetchUser', async () => {
   try {
@@ -21,7 +21,7 @@ export type User = {
   password: string
   address: string
   phone: string
-  isAdmin: string
+  isAdmin: boolean
   isBanned: boolean
   searchTerm: ''
 }
@@ -99,8 +99,31 @@ export const userSlice = createSlice({
         state.isLoading = false
         state.error = action.error.message || 'An error occurred'
       })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.isLoggedIn = true
+        state.userData = action.payload.payload
+        localStorage.setItem(
+          'login',
+          JSON.stringify({
+            isLogin: state.isLoggedIn,
+            userData: state.userData
+          })
+        )
+      })
+      .addCase(logoutUser.fulfilled, (state) => {
+        // console.log(action.payload)
+        state.isLoggedIn = false
+        state.userData = null
+        localStorage.setItem(
+          'logout',
+          JSON.stringify({
+            isLogin: state.isLoggedIn,
+            userData: state.userData
+          })
+        )
+      })
   }
 })
 
-export const { login, logout, addUser, updateUser, searchUser } = userSlice.actions
+export const { addUser, updateUser, searchUser } = userSlice.actions
 export default userSlice.reducer

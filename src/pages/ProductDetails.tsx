@@ -2,19 +2,20 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { Product, fetchProducts, findProductById } from '../redux/slices/products/productSlice'
+import { Product, findBySlug } from '../redux/slices/products/productSlice'
 import { fetchCategory } from '../redux/slices/categories/categorySlice'
 import { addToCart } from '../redux/slices/Cart/cartSlice'
 
 import { AppDispatch, RootState } from '../redux/store'
+import { getProductBySlug } from '../services/ProductService'
 
 const ProductDetails = () => {
-  const { id } = useParams()
-
+  const { slug } = useParams()
   const { singleProduct, isLoading, error } = useSelector(
     (state: RootState) => state.productsReducer
   )
-
+  const baseURLProduct = 'http://localhost:3002/api'
+  console.log(singleProduct)
   const { categories } = useSelector((state: RootState) => state.categoriesReducer)
 
   const dispatch: AppDispatch = useDispatch()
@@ -27,9 +28,17 @@ const ProductDetails = () => {
   }
 
   useEffect(() => {
-    dispatch(fetchProducts()).then(() => dispatch(findProductById(String(id))))
-    dispatch(fetchCategory())
-  }, [id])
+    const fetchData = async () => {
+      try {
+        await getProductBySlug(slug, dispatch)
+        dispatch(findBySlug(slug))
+      } catch (error) {
+        console.error('Error fetching product:', error)
+      }
+    }
+    fetchData()
+  }, [dispatch, slug])
+  console.log('Fetching product')
 
   if (isLoading) {
     return <p>Loading ...</p>
@@ -48,13 +57,13 @@ const ProductDetails = () => {
         <div className="product-details">
           {singleProduct && (
             <>
-              <img src={singleProduct.image} alt="product img" />
+              <img src={`${baseURLProduct}/${singleProduct.image}`} alt="product img" />
               <h5>Name: {singleProduct.name}</h5>
               <h5>Price: {singleProduct.price} $</h5>
               <p>Description: {singleProduct.description}</p>
               <p>Shipping: {singleProduct.shipping}</p>
               <p>Quanity: {singleProduct.quantity}</p>
-              <p>Category: {singleProduct.categoryId}</p>
+              <p>Category: {singleProduct.category}</p>
               <button
                 className="btns"
                 onClick={() => {

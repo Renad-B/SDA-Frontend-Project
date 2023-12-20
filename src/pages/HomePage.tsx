@@ -15,6 +15,7 @@ const Home = () => {
   const { products, isLoading, error, searchTerm } = useSelector(
     (state: RootState) => state.productsReducer
   )
+  const baseURLProduct = 'http://localhost:3002/api'
 
   const { categories } = useSelector((state: RootState) => state.categoriesReducer)
 
@@ -41,41 +42,33 @@ const Home = () => {
     console.log('Search term:', searchTerm)
     dispatch(searchProduct(searchTerm))
   }
+
   const handleSelected = (category: string) => {
     if (selectedCategory.includes(category)) {
-      const filterdCategory = selectedCategory.filter((category) => category !== category)
-      setSelectedCategory(filterdCategory)
+      const filteredCategory = selectedCategory.filter((selected) => selected !== category)
+      setSelectedCategory(filteredCategory)
     } else {
       setSelectedCategory((prevState) => {
         return [...prevState, category]
       })
     }
   }
+
+  //todo how to make it work + pagination logic ?
+
   const filterProducts: Product[] = products.filter((product: Product) => {
     const categoryMatch: boolean =
       selectedCategory.length === 0 ||
-      selectedCategory.some((id: string) => product.categoryId.includes(id))
+      (typeof product.category === 'string' &&
+        selectedCategory.some((id: string) => product.category.includes(id)))
 
     const searchMatch: boolean =
-      searchTerm === '' || product.name.toLowerCase().includes(searchTerm.toLowerCase())
+      searchTerm === '' ||
+      (typeof product.name === 'string' &&
+        product.name.toLowerCase().includes(searchTerm.toLowerCase()))
 
     return categoryMatch && searchMatch
   })
-
-  //?so it work this way because array
-
-  // const filterProducts: Product[] = Array.isArray(products)
-  //   ? products.filter((product: Product) => {
-  //       const categoryMatch: boolean =
-  //         selectedCategory.length === 0 ||
-  //         selectedCategory.some((id: string) => product.categories.includes(id))
-
-  //       const searchMatch: boolean =
-  //         searchTerm === '' || product.name.toLowerCase().includes(searchTerm.toLowerCase())
-
-  //       return categoryMatch && searchMatch
-  //     })
-  //   : []
 
   //pagination logic
   const indexOfLastItem = currentPage * itemsPerPage
@@ -157,8 +150,8 @@ const Home = () => {
                 {currentItems.length > 0 &&
                   currentItems.map((product: Product) => {
                     return (
-                      <article key={product.id} className="product">
-                        {/* <img src={`${baseURLProduct}/${product.image}`} alt="product img" /> */}
+                      <article key={product.slug} className="product">
+                        <img src={`${baseURLProduct}/${product.image}`} alt="product img" />
                         <p>Name: {product.name}</p>
                         <p>Description: {product.description}</p>
                         <p>Price: {product.price} $</p>

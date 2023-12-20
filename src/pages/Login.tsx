@@ -2,11 +2,12 @@ import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
-import { fetchUser, login } from '../redux/slices/users/userSlice'
+import { fetchUser } from '../redux/slices/users/userSlice'
 import { AppDispatch, RootState } from '../redux/store'
+import { loginUser } from '../services/UserService'
 
 const Login = ({ pathName }: { pathName: string }) => {
-  const { users } = useSelector((state: RootState) => state.usersReducer)
+  const { users, userData } = useSelector((state: RootState) => state.usersReducer)
   const dispatch: AppDispatch = useDispatch()
 
   useEffect(() => {
@@ -37,34 +38,17 @@ const Login = ({ pathName }: { pathName: string }) => {
       }
     }
   }
-
+  // useEffect(() => {
+  //   if (userData) {
+  //     navigate(
+  //       pathName ? pathName : `/dashboard/${userData && userData.isAdmin ? 'admin' : 'user'}`
+  //     )
+  //   }
+  // })
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
     try {
-      const findUser = users.find((userData) => userData.email === user.email)
-
-      if (!findUser) {
-        console.log('User dosent exist')
-        return
-      }
-
-      if (findUser.password !== user.password) {
-        console.log('User password is not Correct!')
-        return
-      }
-
-      if (findUser.password !== user.password) {
-        console.log('User password is not Correct!')
-        return
-      }
-
-      if (findUser.ban) {
-        console.log('You are Blocked')
-        return
-      }
-      findUser && findUser.password === user.password
-      dispatch(login(findUser))
-      navigate(pathName ? pathName : `/dasboard/${findUser.role}`)
+      dispatch(loginUser(user))
     } catch (error) {
       console.log(error)
     }
@@ -72,10 +56,10 @@ const Login = ({ pathName }: { pathName: string }) => {
       email: '',
       password: ''
     })
-    if (user.password.length < 6) {
-      setPasswordError('password should be more than 6 character')
-      return
-    }
+    // if (user.password.length < 6) {
+    //   setPasswordError('password should be more than 6 character')
+    //   return
+    // }
   }
 
   return (

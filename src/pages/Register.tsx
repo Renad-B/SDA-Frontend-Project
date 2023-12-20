@@ -19,7 +19,6 @@ const Register = () => {
     address: ''
   })
 
-  //! validation - will i need it here too ?
   // const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   const [nameError, setNameError] = useState('')
   const [passwordError, setPasswordError] = useState('')
@@ -30,25 +29,13 @@ const Register = () => {
       console.log('file selected')
       const fileInput = (event.target as HTMLInputElement) || ''
       setUser((prevUser) => {
-        return { ...prevUser, [event.target.name]: fileInput.files?.[0].name }
+        return { ...prevUser, [event.target.name]: fileInput.files?.[0] }
       })
     } else {
       setUser((prevUser) => {
         return { ...prevUser, [event.target.name]: event.target.value }
       })
     }
-    // const { name, value } = event.target
-    // setUser((prevUser) => {
-    //   return { ...prevUser, [name]: value }
-    // })
-    // Validate email
-    // if (name === 'email') {
-    //   if (!emailPattern.test(value)) {
-    //     setEmailError('Invalid email address')
-    //   } else {
-    //     setEmailError('')
-    //   }
-    // }
   }
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
@@ -71,14 +58,6 @@ const Register = () => {
       setPasswordError('Password should be more than 6 characters')
       return
     }
-
-    // Validate email (uncomment if needed)
-    // if (!emailPattern.test(user.email)) {
-    //   setEmailError('Invalid email address');
-    //   return;
-    // }
-
-    // Dispatch createUser and fetchUser
     try {
       await dispatch(createUser(formData))
       dispatch(fetchUser())
@@ -86,8 +65,6 @@ const Register = () => {
     } catch (error) {
       console.log(error)
     }
-
-    // Additional logic (dispatch, navigate, etc.)
   }
 
   return (

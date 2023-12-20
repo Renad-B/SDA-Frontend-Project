@@ -13,13 +13,14 @@ const UserOrders = () => {
     dispatch(fetchOrders())
   }, [])
 
-  if (isLoading) {
-    return <p>Loading....</p>
-  }
-  if (error) {
-    return <p>{error}</p>
-  }
+  // if (isLoading) {
+  //   return <p>Loading....</p>
+  // }
+  // if (error) {
+  //   return <p>{error}</p>
+  // }
 
+  //todo create,
   console.log(orders)
   return (
     <div className="container">

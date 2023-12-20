@@ -1,16 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import api from '../../../api'
 import axios from 'axios'
+import { createCategory, deleteCategory, updateCategory } from '../../../services/CategoryServicea'
+
+export const categorybaseURL = 'http://localhost:3002'
 
 export const fetchCategory = createAsyncThunk('users/fetchCategory', async () => {
   try {
-    const response = await api.get('http://localhost:3002/api/categories')
+    const response = await axios.get('http://localhost:3002/api/categories')
+    // const response = await axios.get(`${categorybaseURL}api/categories`)
     console.log('Fetch Category', response.data.payload)
-    // Assuming the response structure is { message: 'all categories are returned', categories: [...] }
-    const categories = response.data.payload
-
-    return categories
-    // return response.data
+    return response.data.payload
   } catch (error) {
     console.error('Error', error)
   }
@@ -20,9 +19,6 @@ export type Category = {
   _id: string
   name: string
   slug: string
-  createdAt?: string
-  updatedAt?: string
-  __v: number
 }
 
 export type CategoryState = {
@@ -40,24 +36,7 @@ const initialState: CategoryState = {
 export const categorySlice = createSlice({
   name: 'categories',
   initialState,
-  reducers: {
-    deleteCategory: (state, action) => {
-      //its not working
-      axios.delete(`http://localhost:3002/api/categories/${action.payload}`)
-      window.location.reload()
-      fetchCategory()
-    },
-    addCategory: (state, action) => {
-      state.categories.push(action.payload)
-    },
-    updateCategory: (state, action) => {
-      const { id, name } = action.payload
-      const findCategory = state.categories.find((category) => category._id === id)
-      if (findCategory) {
-        findCategory.name = name
-      }
-    }
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
       .addCase(fetchCategory.pending, (state) => {
@@ -72,7 +51,21 @@ export const categorySlice = createSlice({
         state.isLoading = false
         state.error = action.error.message || 'An error occurred'
       })
+      .addCase(deleteCategory.fulfilled, (state, action) => {
+        state.categories = state.categories.filter((category) => category.slug !== action.payload)
+        state.isLoading = false
+      })
+      .addCase(createCategory.fulfilled, (state, action) => {
+        state.categories.push(action.payload.payload)
+      })
+      .addCase(updateCategory.fulfilled, (state, action) => {
+        const { name, slug } = action.payload
+        const foundCategory = state.categories.find((category) => category.slug === slug)
+        if (foundCategory) {
+          foundCategory.name = name
+        }
+      })
   }
 })
-export const { deleteCategory, addCategory, updateCategory } = categorySlice.actions
+
 export default categorySlice.reducer

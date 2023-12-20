@@ -2,58 +2,57 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import AdminSidebar from './Admin/AdminSidebar'
-import {
-  addCategory,
-  deleteCategory,
-  fetchCategory,
-  updateCategory
-} from '../redux/slices/categories/categorySlice'
+import { fetchCategory } from '../redux/slices/categories/categorySlice'
 
 import { AppDispatch, RootState } from '../redux/store'
+import { createCategory, deleteCategory, updateCategory } from '../services/CategoryServicea'
 
 const Category = () => {
-  const { categories, isLoading, error } = useSelector(
-    (state: RootState) => state.categoriesReducer
-  )
+  const { categories } = useSelector((state: RootState) => state.categoriesReducer)
   const [categoryName, setCategoryName] = useState('')
   const [isEditing, setIsEditing] = useState(false)
-  const [categoryId, setCategoryId] = useState(0)
+  const [categorySlug, setCategorySlug] = useState('')
 
   const dispatch: AppDispatch = useDispatch()
-
   useEffect(() => {
     dispatch(fetchCategory())
   }, [])
 
-  if (isLoading) {
-    return <p>Loading ...</p>
-  }
-  if (error) {
-    return <p> {error}...</p>
-  }
+  // if (isLoading) {
+  //   return <p>Loading ...</p>
+  // }
+  // if (error) {
+  //   return <p> {error}...</p>
+  // }
+
   const handleDelete = (slug: string) => {
     dispatch(deleteCategory(slug))
   }
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value
     setCategoryName(value)
   }
-  const handleEditing = (id: string, name: string) => {
-    setCategoryId(id)
-    setIsEditing(!isEditing)
-    setCategoryName(name)
-  }
+
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()
     if (!isEditing) {
-      const newCategory = { id: new Date().getTime(), name: categoryName }
-      dispatch(addCategory(newCategory))
+      dispatch(createCategory(categoryName))
     } else {
-      const updateCategoryData = { id: categoryId, name: categoryName }
-      dispatch(updateCategory(updateCategoryData))
+      dispatch(updateCategory({ slug: categorySlug, name: categoryName }))
+      dispatch(fetchCategory()) // Refresh
     }
+    dispatch(fetchCategory()) // Refresh
     setCategoryName('')
+    setIsEditing(false)
   }
+
+  const handleEditing = (slug: string, name: string) => {
+    setCategorySlug(slug)
+    setIsEditing(!isEditing)
+    setCategoryName(name)
+  }
+
   return (
     <div className="container">
       <AdminSidebar />
@@ -77,11 +76,11 @@ const Category = () => {
         {categories.length > 0 &&
           categories.map((category) => {
             return (
-              <article key={category.id} className="category">
+              <article key={category.slug} className="category">
                 <p>{category.name}</p>
                 <button
                   onClick={() => {
-                    handleEditing(category.id, category.name)
+                    handleEditing(category.slug, category.name)
                   }}>
                   Edit
                 </button>
