@@ -36,7 +36,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link to={`/dasboard/${userData.role}`}>{userData.role}</Link>
+              <Link to={`/dasboard/${userData?.isAdmin}`}>{userData?.isAdmin}</Link>
             </li>
           </>
         )}

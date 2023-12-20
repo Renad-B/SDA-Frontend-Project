@@ -31,7 +31,7 @@ export type Product = {
   createdAt?: string
   updatedAt?: string
   //to think about it
-  categories: number[]
+  categoryId: number | string
 }
 
 export type ProductState = {

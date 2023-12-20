@@ -115,7 +115,7 @@ export const userSlice = createSlice({
         state.isLoggedIn = false
         state.userData = null
         localStorage.setItem(
-          'logout',
+          'login',
           JSON.stringify({
             isLogin: state.isLoggedIn,
             userData: state.userData

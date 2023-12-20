@@ -7,7 +7,7 @@ const AdminSidebar: React.FC = () => {
       <h2>Menu</h2>
       <ul>
         <li>
-          <Link to="/dasboard/admin/catgeory">Category</Link>
+          <Link to="/dasboard/admin/category">Category</Link>
         </li>
         <li>
           <Link to="/dasboard/admin/products">Products</Link>

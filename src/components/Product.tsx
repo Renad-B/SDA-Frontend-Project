@@ -13,6 +13,15 @@ const Products = () => {
   const [isEditing, setIsEditing] = useState(false)
   const [productId, setProudctId] = useState(0)
 
+  const [product, setProduct] = useState({
+    name: '',
+    // image: '',
+    description: '',
+    price: 0,
+    quantity: 0,
+    category: ''
+  })
+
   const dispatch: AppDispatch = useDispatch()
 
   useEffect(() => {
@@ -29,10 +38,18 @@ const Products = () => {
   }
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setProduct((prevProduct) => ({
-      ...prevProduct,
-      [event.target.name]: event.target.value
-    }))
+    if (event.target.type === 'file') {
+      const imageFile = event.target.files?.[0]
+      const { name } = event.target
+      setProduct((prevProduct) => {
+        return { ...prevProduct, [name]: imageFile }
+      })
+    } else {
+      const { value, name } = event.target
+      setProduct((prevProduct) => {
+        return { ...prevProduct, [name]: value }
+      })
+    }
   }
 
   const handleEditing = (id: number, name: string) => {
@@ -40,35 +57,22 @@ const Products = () => {
     setIsEditing(!isEditing)
     setProductName(name)
   }
-  const [product, setProduct] = useState({
-    _id: '',
-    name: '',
-    image: '',
-    description: '',
-    categories: [],
-    sizes: [''],
-    price: 0,
-    slug: '',
-    quantity: 0,
-    sold: 0,
-    shipping: 0,
-    category: ''
-  })
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
-    const formData = new FormData()
-    formData.append('name', product.name)
-    formData.append('description', product.description)
-    formData.append('quantity', String(product.quantity))
-    formData.append('sold', String(product.sold))
-    formData.append('price', String(product.price))
-    formData.append('image', product.image)
-    formData.append('category', product.category)
+    console.log(product)
+    // const formData = new FormData()
+    // formData.append('name', product.name)
+    // formData.append('description', product.description)
+    // formData.append('quantity', String(product.quantity))
+    // formData.append('price', String(product.price))
+    // // formData.append('image', product.image)
+    // formData.append('category', product.category)
 
     // Dispatch product and fetchproduct
     try {
-      await dispatch(createProduct(formData))
+      await dispatch(createProduct(product))
+      // console.log(formData)
       dispatch(fetchProducts())
       // ... other logic after successful registration
     } catch (error) {
@@ -112,18 +116,17 @@ const Products = () => {
               onChange={handleChange}
             />
           </div>
-
+          {/* 
           <div className="form-group">
             <label>Image:</label>
             <input
               type="file"
               name="image"
-              value={product.image}
               placeholder="Add product image URL .."
               accept="image/*"
               onChange={handleChange}
             />
-          </div>
+          </div> */}
 
           <div className="form-group">
             <label>Price:</label>
@@ -150,8 +153,8 @@ const Products = () => {
             <label>Category:</label>
             <input
               type="text"
-              name="category"
-              value={product.category}
+              name="categoryId"
+              value={product.categoryId}
               placeholder="Add product category .."
               onChange={handleChange}
             />
@@ -166,8 +169,8 @@ const Products = () => {
           {products.length > 0 &&
             products.map((product) => {
               return (
-                <article key={product.id} className="product">
-                  <img src={product.image} alt="product-img" />
+                <article key={product.name} className="product">
+                  {/* <img src={product.image} alt="product-img" /> */}
                   <p>{product.name}</p>
                   <p>{product.description}</p>
                   <button
@@ -178,7 +181,7 @@ const Products = () => {
                   </button>
                   <button
                     onClick={() => {
-                      handleEditing(product.id, product.name)
+                      handleEditing(product.slug, product.name)
                     }}>
                     Edit
                   </button>

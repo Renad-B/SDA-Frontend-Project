@@ -38,17 +38,21 @@ const Login = ({ pathName }: { pathName: string }) => {
       }
     }
   }
-  // useEffect(() => {
-  //   if (userData) {
-  //     navigate(
-  //       pathName ? pathName : `/dashboard/${userData && userData.isAdmin ? 'admin' : 'user'}`
-  //     )
-  //   }
-  // })
+  useEffect(() => {
+    if (userData) {
+      navigate(
+        pathName ? pathName : `/dashboard/${userData && userData.isAdmin ? 'admin' : 'user'}`
+      )
+      console.log(userData)
+    }
+  }, [userData, navigate, pathName])
+
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
     try {
       dispatch(loginUser(user))
+      // navigate(`/dashboard/${userData?.isAdmin ? 'admin' : 'user'}`)
+      // console.log(userData)
     } catch (error) {
       console.log(error)
     }
