@@ -22,7 +22,7 @@ export const createProduct = createAsyncThunk('products/createProduct', async (n
     const response = await axios.post(`${baseURLProduct}/products`, newProduct, {
       // headers: { 'Content-Type': 'multipart/form-data' }
     })
-    console.log(response.data.payload.products)
+    console.log(response.data.payload)
     return response.data.payload.payload
   } catch (error) {
     console.error('Type of error', error)

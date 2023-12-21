@@ -7,10 +7,10 @@ const UserSidebar = () => {
       <h2>Menu</h2>
       <ul>
         <li>
-          <Link to="/dasboard/user/profile">Profile</Link>
+          <Link to="/dashboard/user/profile">Profile</Link>
         </li>
         <li>
-          <Link to="/dasboard/user/orders">Orders</Link>
+          <Link to="/dashboard/user/orders">Orders</Link>
         </li>
       </ul>
     </aside>
