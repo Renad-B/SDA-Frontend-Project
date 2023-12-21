@@ -31,12 +31,12 @@ const Navbar = () => {
         {isLoggedIn && (
           <>
             <li>
-              <Link to="/dasboard/logout" onClick={handleLogout}>
+              <Link to="/dashboard/logout" onClick={handleLogout}>
                 Logout
               </Link>
             </li>
             <li>
-              <Link to={`/dasboard/${userData?.isAdmin}`}>{userData?.isAdmin}</Link>
+              <Link to={`/dashboard/${userData?.isAdmin}`}>{userData?.isAdmin}</Link>
             </li>
           </>
         )}
@@ -44,10 +44,10 @@ const Navbar = () => {
         {!isLoggedIn && (
           <>
             <li>
-              <Link to="/dasboard/register">Register</Link>
+              <Link to="/dashboard/register">Register</Link>
             </li>
             <li>
-              <Link to="/dasboard/login">Login</Link>
+              <Link to="/dashboard/login">Login</Link>
             </li>
           </>
         )}

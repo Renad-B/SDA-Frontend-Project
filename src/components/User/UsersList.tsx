@@ -9,7 +9,7 @@ import { AppDispatch, RootState } from '../../redux/store'
 import Table from 'react-bootstrap/Table'
 import SearchInput from '../SearchInput'
 
-import { banUser, baseURL, deleteUser, unbanUser } from '../../services/UserService'
+import { banUser, deleteUser, unbanUser } from '../../services/UserService'
 
 const UsersList = () => {
   const { users, isLoading, error } = useSelector((state: RootState) => state.usersReducer)
@@ -80,7 +80,6 @@ const UsersList = () => {
                 <tr>
                   <th>Name</th>
                   <th>Email</th>
-                  <th>User picture</th>
                   <th>Options</th>
                 </tr>
               </thead>
@@ -92,9 +91,6 @@ const UsersList = () => {
                       <tr key={user._id}>
                         <td>{user.name}</td>
                         <td>{user.email}</td>
-                        <td>
-                          <img src={`${baseURL}/${user.image}`} alt={user.image} />
-                        </td>
                         <td>
                           <button className="btns" onClick={() => handleDelete(user._id)}>
                             Delete

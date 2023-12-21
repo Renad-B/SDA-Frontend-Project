@@ -14,7 +14,9 @@ const ProductDetails = () => {
   const { singleProduct, isLoading, error } = useSelector(
     (state: RootState) => state.productsReducer
   )
-  const baseURLProduct = 'http://localhost:3002/api'
+
+  const baseURLProduct = 'http://localhost:3002'
+
   console.log(singleProduct)
   const { categories } = useSelector((state: RootState) => state.categoriesReducer)
 

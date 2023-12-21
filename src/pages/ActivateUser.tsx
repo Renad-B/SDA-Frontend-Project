@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../redux/store'
 
 export const ActivateUser = () => {
-  const { token } = useParams<string>()
+  const { token } = useParams()
   const decoded = jwtDecode(String(token))
   console.log(token)
   console.log(decoded)

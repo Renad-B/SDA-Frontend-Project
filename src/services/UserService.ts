@@ -21,7 +21,7 @@ export const activateUserAccount = createAsyncThunk(
     try {
       const response = await axios.post(`${baseURL}/users/activate`, { token })
       // console.log(response.data.payload.users)
-      return response.data
+      return response.data.payload
     } catch (error) {
       console.error(error)
       throw new Error('Failed to activate user')

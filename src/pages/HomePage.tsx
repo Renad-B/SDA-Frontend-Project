@@ -15,7 +15,7 @@ const Home = () => {
   const { products, isLoading, error, searchTerm } = useSelector(
     (state: RootState) => state.productsReducer
   )
-  const baseURLProduct = 'http://localhost:3002/api'
+  const baseURLProduct = 'http://localhost:3002'
 
   const { categories } = useSelector((state: RootState) => state.categoriesReducer)
 
