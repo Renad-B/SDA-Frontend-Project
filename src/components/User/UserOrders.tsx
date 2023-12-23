@@ -8,7 +8,9 @@ import { fetchOrders } from '../../redux/slices/orders/orderSlice'
 
 const UserOrders = () => {
   const { orders, isLoading, error } = useSelector((state: RootState) => state.orderReducer)
+
   const dispatch: AppDispatch = useDispatch()
+
   useEffect(() => {
     dispatch(fetchOrders())
   }, [])
@@ -21,7 +23,7 @@ const UserOrders = () => {
   // }
 
   //todo create,
-  console.log(orders)
+
   return (
     <div className="container">
       <UserSidebar />

@@ -3,16 +3,15 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import UserSidebar from '../components/User/UserSidebar'
 
-import { updateUser } from '../redux/slices/users/userSlice'
 import { AppDispatch, RootState } from '../redux/store'
+// import { updateUser } from '../services/UserService'
 
 const UserProfile = () => {
   const dispatch: AppDispatch = useDispatch()
   const { userData } = useSelector((state: RootState) => state.usersReducer)
   const [isEditing, setIsEditing] = useState(false)
   const [user, setUser] = useState({
-    firstName: userData?.firstName,
-    lastName: userData?.lastName
+    Name: userData?.name
   })
 
   const handleEditClick = () => {
@@ -25,8 +24,9 @@ const UserProfile = () => {
   }
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()
-    const updateUserData = { id: userData?.id, ...user }
-    dispatch(updateUser(updateUserData))
+    console.log(user)
+    const updateUserData = { _id: userData?._id, ...user }
+    // dispatch(updateUser(updateUserData))
   }
   return (
     <div className="container">
@@ -36,26 +36,17 @@ const UserProfile = () => {
           <div>
             <div>
               <p>Profile information:</p>
-              <p>Name: {`${userData?.firstName} ${userData?.lastName} `}</p>
+              <p>Name: {`${userData?.name}`}</p>
               <p>Email: {`${userData?.email} `}</p>
-              <p>ID: {`${userData?.id} `}</p>
-              <p>Role: {`${userData?.role} `}</p>
+              <p>ID: {`${userData?._id} `}</p>
+              <p>Role: {`${userData?.isAdmin ? 'Admin' : 'User'} `}</p>
               <button className="btns" onClick={handleEditClick}>
                 Edit profile
               </button>
             </div>
             {isEditing && (
               <form action="" onSubmit={handleSubmit}>
-                <input
-                  type="text"
-                  name="firstName"
-                  value={user.firstName}
-                  onChange={handleChange}></input>
-                <input
-                  type="text"
-                  name="lastName"
-                  value={user.lastName}
-                  onChange={handleChange}></input>
+                <input type="text" name="Name" value={user.Name} onChange={handleChange}></input>
                 <button className="btns" type="submit">
                   Update profile
                 </button>

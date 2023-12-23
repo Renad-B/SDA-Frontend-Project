@@ -1,5 +1,3 @@
-//todo 1- create, delete, update
-
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 import { Category, categorybaseURL } from '../redux/slices/categories/categorySlice'
@@ -9,7 +7,7 @@ export const deleteCategory = createAsyncThunk('category/deleteCategory', async 
     await axios.delete(`${categorybaseURL}/api/categories/${slug}`)
     return slug
   } catch (error) {
-    console.error(error)
+    throw new Error(`Failed to delete category`)
   }
 })
 
@@ -19,7 +17,7 @@ export const createCategory = createAsyncThunk('category/createCategory', async 
     console.log(response)
     return response.data
   } catch (error) {
-    console.log(error)
+    throw new Error(`Failed to create category`)
   }
 })
 
@@ -32,7 +30,7 @@ export const updateCategory = createAsyncThunk(
       })
       return categoryData
     } catch (error) {
-      console.log(error)
+      throw new Error(`Failed to update category`)
     }
   }
 )

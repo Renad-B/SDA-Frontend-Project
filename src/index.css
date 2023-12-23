@@ -470,11 +470,20 @@ img {
   background-color: #00ccff;
 }
 
-.form-group {
-  margin-bottom: 15px;
+/* .form-group {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  flex-wrap: wrap;
+} */
+form {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  flex-wrap: wrap;
 }
-
-label {
+.form-group label {
   display: block;
+  margin-bottom: 5px;
   margin-bottom: 5px;
 }

@@ -99,12 +99,12 @@ const Home = () => {
       </button>
     )
   }
-  if (isLoading) {
-    return <p>Loading ...</p>
-  }
-  if (error) {
-    return <p> {error}...</p>
-  }
+  // if (isLoading) {
+  //   return <p>Loading ...</p>
+  // }
+  // if (error) {
+  //   return <p> {error}...</p>
+  // }
 
   const handleAddToCart = (product: Product) => {
     //add to cart

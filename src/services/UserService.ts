@@ -1,7 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
+axios.defaults.withCredentials = true
+api.defaults.withCredentials = true
 
 import { fetchUser } from '../redux/slices/users/userSlice'
+import api from '../api'
 
 export const baseURL = 'http://localhost:3002/api'
 
@@ -14,6 +17,15 @@ export const createUser = createAsyncThunk('users/createUser', async (newUser: F
     throw new Error('Failed to register user')
   }
 })
+
+// export const updateUser = createAsyncThunk('users/updateUser', async (userData: object) => {
+//   try {
+//     const response = await axios.put(`${baseURL}/users/${userData._id}`, userData)
+//     return response
+//   } catch (error) {
+//     throw new Error('Failed to update user')
+//   }
+// })
 
 export const activateUserAccount = createAsyncThunk(
   'users/activateUserAccount',
@@ -62,10 +74,9 @@ export const unbanUser = async (id: string) => {
 export const loginUser = createAsyncThunk('user/loginUser', async (user: object) => {
   try {
     const response = await axios.post(`${baseURL}/auth/login`, user)
-    console.log(response)
     return response.data
   } catch (error) {
-    console.log(error)
+    throw new Error('Falied to login user')
   }
 })
 
@@ -74,6 +85,6 @@ export const logoutUser = createAsyncThunk('user/logoutUser', async () => {
     const response = await axios.post(`${baseURL}/auth/logout`)
     return response.data
   } catch (error) {
-    console.log(error)
+    throw new Error('Falied to logout user')
   }
 })

@@ -55,6 +55,7 @@ const ProductDetails = () => {
   return (
     <div>
       <h2> -- Proudct Detail --</h2>
+      <br />
       <div className="products-details">
         <div className="product-details">
           {singleProduct && (
@@ -65,7 +66,7 @@ const ProductDetails = () => {
               <p>Description: {singleProduct.description}</p>
               <p>Shipping: {singleProduct.shipping}</p>
               <p>Quanity: {singleProduct.quantity}</p>
-              <p>Category: {singleProduct.category}</p>
+              <p>Category: {singleProduct.categoryId}</p>
               <button
                 className="btns"
                 onClick={() => {

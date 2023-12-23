@@ -5,7 +5,7 @@ import AdminSidebar from './Admin/AdminSidebar'
 import { fetchCategory } from '../redux/slices/categories/categorySlice'
 
 import { AppDispatch, RootState } from '../redux/store'
-import { createCategory, deleteCategory, updateCategory } from '../services/CategoryServicea'
+import { createCategory, deleteCategory, updateCategory } from '../services/CategoryServices'
 
 const Category = () => {
   const { categories } = useSelector((state: RootState) => state.categoriesReducer)

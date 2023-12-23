@@ -52,20 +52,9 @@ const UsersList = () => {
       dispatch(fetchUser())
       //response or toast message
     } catch (error) {
-      console.log(error.response?.data.messgae || error.messgae)
+      throw Error('canr fetch users')
     }
   }
-  //! user search functionality
-  //!user image
-  //why i should refresh ?
-  const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value)
-    dispatch(searchUser(event.target.value))
-  }
-
-  // const userSearch = searchTerm
-  //   ? users.filter((user) => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
-  //   : users
 
   return (
     <div className="container">
@@ -73,7 +62,6 @@ const UsersList = () => {
       <div className="main-content">
         <h2>List of users: </h2>
         <section className="users">
-          <SearchInput searchTerm={searchTerm} handleSearch={handleSearch} />
           {users.length > 0 && (
             <Table striped bordered hover>
               <thead>

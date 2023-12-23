@@ -4,15 +4,18 @@ import { useNavigate } from 'react-router-dom'
 
 import { fetchUser } from '../redux/slices/users/userSlice'
 import { AppDispatch, RootState } from '../redux/store'
-import { loginUser } from '../services/UserService'
+import { loginUser, logoutUser } from '../services/UserService'
+import axios from 'axios'
+
+axios.defaults.withCredentials = true
 
 const Login = ({ pathName }: { pathName: string }) => {
   const { users, userData } = useSelector((state: RootState) => state.usersReducer)
   const dispatch: AppDispatch = useDispatch()
 
-  useEffect(() => {
-    dispatch(fetchUser())
-  }, [dispatch])
+  // useEffect(() => {
+  //   dispatch(fetchUser())
+  // }, [dispatch])
 
   const navigate = useNavigate()
   const [user, setUser] = useState({
@@ -54,16 +57,12 @@ const Login = ({ pathName }: { pathName: string }) => {
       // navigate(`/dashboard/${userData?.isAdmin ? 'admin' : 'user'}`)
       // console.log(userData)
     } catch (error) {
-      console.log(error)
+      throw Error('cant loging')
     }
-    setUser({
-      email: '',
-      password: ''
-    })
-    // if (user.password.length < 6) {
-    //   setPasswordError('password should be more than 6 character')
-    //   return
-    // }
+    // setUser({
+    //   email: '',
+    //   password: ''
+    // })
   }
 
   return (

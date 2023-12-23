@@ -1,5 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+//why still cant acess the cooki
+axios.defaults.withCredentials = true
 
 import { baseURL, loginUser, logoutUser } from '../../../services/UserService'
 
@@ -24,6 +26,7 @@ export type User = {
   isAdmin: boolean
   isBanned: boolean
   searchTerm: ''
+  token: string
 }
 
 export type UserState = {
@@ -54,17 +57,17 @@ export const userSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<User>) => {
-      state.isLoggedIn = true
-      state.userData = action.payload
-      localStorage.setItem('userData', JSON.stringify(state))
-    },
-    logout: (state) => {
-      state.isLoggedIn = false
-      state.userData = null
-      // localStorage.setItem('userData', JSON.stringify(state))
-      localStorage.removeItem('userData')
-    },
+    // login: (state, action: PayloadAction<User>) => {
+    //   state.isLoggedIn = true
+    //   state.userData = action.payload
+    //   localStorage.setItem('userData', JSON.stringify(state))
+    // },
+    // logout: (state) => {
+    //   state.isLoggedIn = false
+    //   state.userData = null
+    //   // localStorage.setItem('userData', JSON.stringify(state))
+    //   localStorage.removeItem('userData')
+    // },
     searchUser: (state, action) => {
       state.searchTerm = action.payload
       // Filter users based on the search term
@@ -125,5 +128,5 @@ export const userSlice = createSlice({
   }
 })
 
-export const { addUser, updateUser, searchUser } = userSlice.actions
+export const { addUser, searchUser } = userSlice.actions
 export default userSlice.reducer

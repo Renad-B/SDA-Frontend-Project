@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { createCategory, deleteCategory, updateCategory } from '../../../services/CategoryServicea'
+import { createCategory, deleteCategory, updateCategory } from '../../../services/CategoryServices'
 
 export const categorybaseURL = 'http://localhost:3002'
 
@@ -11,7 +11,7 @@ export const fetchCategory = createAsyncThunk('users/fetchCategory', async () =>
     console.log('Fetch Category', response.data.payload)
     return response.data.payload
   } catch (error) {
-    console.error('Error', error)
+    throw new Error(`Failed to fetch category`)
   }
 })
 

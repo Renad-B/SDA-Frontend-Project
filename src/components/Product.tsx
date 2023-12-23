@@ -5,7 +5,7 @@ import AdminSidebar from './Admin/AdminSidebar'
 import { AppDispatch, RootState } from '../redux/store'
 
 import { fetchProducts } from '../redux/slices/products/productSlice'
-import { createProduct, deleteProductBySlug } from '../services/ProductService'
+import { createProduct, deleteProductBySlug, updateProduct } from '../services/ProductService'
 
 const Products = () => {
   const { products, isLoading, error } = useSelector((state: RootState) => state.productsReducer)
@@ -15,12 +15,14 @@ const Products = () => {
 
   const [product, setProduct] = useState({
     name: '',
-    // image: '',
+    image: '',
     description: '',
     price: 0,
     quantity: 0,
     category: ''
   })
+
+  const baseURLProduct = 'http://localhost:3002'
 
   const dispatch: AppDispatch = useDispatch()
 
@@ -37,44 +39,72 @@ const Products = () => {
     }
   }
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  // const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  //   if (event.target.type === 'file') {
+  //     const imageFile = event.target.files?.[0]
+  //     const { name } = event.target
+  //     setProduct((prevProduct) => {
+  //       return { ...prevProduct, [name]: imageFile }
+  //     })
+  //   } else {
+  //     const { value, name } = event.target
+  //     setProduct((prevProduct) => {
+  //       return { ...prevProduct, [name]: value }
+  //     })
+  //   }
+  // }
+  const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (event.target.type === 'file') {
-      const imageFile = event.target.files?.[0]
-      const { name } = event.target
+      const fileInput = (event.target as HTMLInputElement) || ''
       setProduct((prevProduct) => {
-        return { ...prevProduct, [name]: imageFile }
+        return { ...prevProduct, [event.target.name]: fileInput.files?.[0] }
       })
     } else {
-      const { value, name } = event.target
       setProduct((prevProduct) => {
-        return { ...prevProduct, [name]: value }
+        return { ...prevProduct, [event.target.name]: event.target.value }
       })
     }
   }
 
-  const handleEditing = (id: number, name: string) => {
-    setProudctId(id)
+  const handleEditing = (slug: string, name: string) => {
+    setProudctId(slug)
     setIsEditing(!isEditing)
     setProductName(name)
+
+    // Set the existing product details for editing
+    const existingProduct = products.find((product) => product.slug === slug)
+    if (existingProduct) {
+      setProduct({
+        ...existingProduct,
+        name: existingProduct.name,
+        price: existingProduct.price
+      })
+    }
   }
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
     console.log(product)
-    // const formData = new FormData()
-    // formData.append('name', product.name)
-    // formData.append('description', product.description)
-    // formData.append('quantity', String(product.quantity))
-    // formData.append('price', String(product.price))
-    // // formData.append('image', product.image)
-    // formData.append('category', product.category)
+    const formData = new FormData()
+    formData.append('name', product.name)
+    formData.append('description', product.description)
+    formData.append('quantity', String(product.quantity))
+    formData.append('price', String(product.price))
+    formData.append('image', product.image)
+    formData.append('category', product.category)
 
     // Dispatch product and fetchproduct
     try {
-      await dispatch(createProduct(product))
+      // await dispatch(createProduct(product))
+      if (isEditing) {
+        // If editing, dispatch an action to update the existing product
+        await dispatch(updateProduct(product))
+      } else {
+        // If not editing, dispatch an action to create a new product
+        await dispatch(createProduct(product))
+      }
       // console.log(formData)
       dispatch(fetchProducts())
-      // ... other logic after successful registration
     } catch (error) {
       console.error('Error during form submission:', error)
     }
@@ -94,7 +124,7 @@ const Products = () => {
         <br />
         <h4>Create a product</h4>
 
-        <form action="register-form" onSubmit={handleSubmit}>
+        <form action="form-group" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="name">Name:</label>
             <input
@@ -116,17 +146,11 @@ const Products = () => {
               onChange={handleChange}
             />
           </div>
-          {/* 
+
           <div className="form-group">
             <label>Image:</label>
-            <input
-              type="file"
-              name="image"
-              placeholder="Add product image URL .."
-              accept="image/*"
-              onChange={handleChange}
-            />
-          </div> */}
+            <input type="file" name="image" accept="image/*" onChange={handleChange} />
+          </div>
 
           <div className="form-group">
             <label>Price:</label>
@@ -171,6 +195,7 @@ const Products = () => {
               return (
                 <article key={product.name} className="product">
                   {/* <img src={product.image} alt="product-img" /> */}
+                  <img src={`${baseURLProduct}/${product.image}`} alt="product img" />
                   <p>{product.name}</p>
                   <p>{product.description}</p>
                   <button

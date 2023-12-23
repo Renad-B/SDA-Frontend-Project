@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { AppDispatch, RootState } from '../redux/store'
 
-// import { logout } from '../redux/slices/users/userSlice'
 import CartIcon from './CartIcon'
+
 import { logoutUser } from '../services/UserService'
 
 const Navbar = () => {
@@ -36,7 +36,9 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link to={`/dashboard/${userData?.isAdmin}`}>{userData?.isAdmin}</Link>
+              <Link to={`/dashboard/${userData?.isAdmin ? 'admin' : 'user'}`}>
+                {userData?.isAdmin} Dashboard
+              </Link>
             </li>
           </>
         )}

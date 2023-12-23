@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 // import api from '../../../api'
 import axios from 'axios'
-import { setSingleProduct } from '../../../services/ProductService'
+import { setSingleProduct, updateProduct } from '../../../services/ProductService'
 
 const baseURLProduct = 'http://localhost:3002/api'
 
@@ -74,16 +74,16 @@ export const productSlice = createSlice({
     },
     addProduct: (state, action) => {
       state.products.push(action.payload)
-    },
-    updateProduct: (state, action) => {
-      const { id, name } = action.payload
-      const findProduct = state.products.find((product) => product.id === id)
-      if (findProduct) {
-        findProduct.name = name
-        // findProduct.description = description
-        // findProduct.categories = categories
-      }
     }
+    // updateProduct: (state, action) => {
+    //   const { id, name } = action.payload
+    //   const findProduct = state.products.find((product) => product.id === id)
+    //   if (findProduct) {
+    //     findProduct.name = name
+    //     // findProduct.description = description
+    //     // findProduct.categories = categories
+    //   }
+    // }
   },
   extraReducers(builder) {
     builder
@@ -102,8 +102,14 @@ export const productSlice = createSlice({
       .addCase(setSingleProduct, (state, action) => {
         state.singleProduct = action.payload
       })
+      .addCase(updateProduct.fulfilled, (state, action) => {
+        const { name, slug } = action.payload
+        const foundSingleProduct = state.products.find((product) => product.slug === slug)
+        if (foundSingleProduct) {
+          foundSingleProduct.name = name
+        }
+      })
   }
 })
-export const { searchProduct, sortProducts, addProduct, updateProduct, findBySlug } =
-  productSlice.actions
+export const { searchProduct, sortProducts, addProduct, findBySlug } = productSlice.actions
 export default productSlice.reducer

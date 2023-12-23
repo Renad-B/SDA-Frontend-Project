@@ -11,7 +11,7 @@ export const deleteProductBySlug = async (slug: string | undefined) => {
     console.log(response.data)
     return response.data.payload
   } catch (error) {
-    console.log(error)
+    throw Error('Cannot delete the product')
   }
 }
 
@@ -38,9 +38,23 @@ export const getProductBySlug = async (slug: string | undefined, dispatch: AppDi
     dispatch(setSingleProduct(response.data.payload))
     // return response.data.payload
   } catch (error) {
-    console.log(error)
+    throw Error(`cannot get product with this ${slug}`)
   }
 }
 
-//todo
 //update single product
+export const updateProduct = createAsyncThunk(
+  'product/updateProduct',
+  async (productData: Product) => {
+    try {
+      const response = await axios.put(
+        `${baseURLProduct}/products/${productData.slug}`,
+        productData
+      )
+      return response.data.payload
+    } catch (error) {
+      console.error('Error during product update:', error)
+      throw error
+    }
+  }
+)
