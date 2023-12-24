@@ -19,7 +19,7 @@ export const ActivateUser = () => {
       dispatch(activateUserAccount(token))
 
       // if is successful then set the user to the login page
-      navigate('/dasboard/login')
+      navigate('/dashboard/login')
     } catch (error) {
       throw new Error('Cant activate the user')
     }

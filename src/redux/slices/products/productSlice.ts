@@ -17,7 +17,6 @@ export const fetchProducts = createAsyncThunk('Products/fetchProducts', async ()
 })
 
 export type Product = {
-  category: string
   _id: string
   name: string
   slug: string
@@ -29,8 +28,7 @@ export type Product = {
   description: string
   createdAt?: string
   updatedAt?: string
-  //to think about it
-  categoryId: number | string
+  categoryId: string
 }
 
 export type ProductState = {
@@ -63,27 +61,18 @@ export const productSlice = createSlice({
         state.singleProduct = foundSingleProduct
       }
     },
-    sortProducts: (state, action) => {
-      const sorting = action.payload
-      console.log(sorting)
-      if (sorting === 'category') {
-        state.products.sort((a, b) => a.categoreis[0] - b.categoreis[0])
-      } else if (sorting === 'price') {
-        state.products.sort((a, b) => a.price - b.price)
-      }
-    },
+    // sortProducts: (state, action) => {
+    //   const sorting = action.payload
+    //   console.log(sorting)
+    //   if (sorting === 'category') {
+    //     state.products.sort((a, b) => a.categoreis[0] - b.categoreis[0])
+    //   } else if (sorting === 'price') {
+    //     state.products.sort((a, b) => a.price - b.price)
+    //   }
+    // },
     addProduct: (state, action) => {
       state.products.push(action.payload)
     }
-    // updateProduct: (state, action) => {
-    //   const { id, name } = action.payload
-    //   const findProduct = state.products.find((product) => product.id === id)
-    //   if (findProduct) {
-    //     findProduct.name = name
-    //     // findProduct.description = description
-    //     // findProduct.categories = categories
-    //   }
-    // }
   },
   extraReducers(builder) {
     builder
@@ -111,5 +100,5 @@ export const productSlice = createSlice({
       })
   }
 })
-export const { searchProduct, sortProducts, addProduct, findBySlug } = productSlice.actions
+export const { searchProduct, addProduct, findBySlug } = productSlice.actions
 export default productSlice.reducer

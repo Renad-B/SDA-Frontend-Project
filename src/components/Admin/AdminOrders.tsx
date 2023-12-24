@@ -14,7 +14,7 @@ const AdminOrders = () => {
   useEffect(() => {
     dispatch(fetchOrders())
   }, [])
-
+  //!creatw the order in the morning
   // if (isLoading) {
   //   return <p>Loading....</p>
   // }
@@ -68,7 +68,7 @@ const AdminOrders = () => {
             orders.map((order) => {
               return (
                 <article key={order._id} className="order">
-                  <p>ID: {order._id}</p>
+                  {/* <p>ID: {order._id}</p> */}
                   <p>Proudct ID:{order.product}</p>
                   <p>Shipping Address:{order.shippingAddress}</p>
                   <p> Shipping status:{order.status}</p>

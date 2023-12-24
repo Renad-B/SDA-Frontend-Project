@@ -4,14 +4,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import UserSidebar from '../components/User/UserSidebar'
 
 import { AppDispatch, RootState } from '../redux/store'
-// import { updateUser } from '../services/UserService'
+import { updateUser } from '../services/UserService'
 
 const UserProfile = () => {
   const dispatch: AppDispatch = useDispatch()
   const { userData } = useSelector((state: RootState) => state.usersReducer)
   const [isEditing, setIsEditing] = useState(false)
   const [user, setUser] = useState({
-    Name: userData?.name
+    name: userData?.name
   })
 
   const handleEditClick = () => {
@@ -26,7 +26,7 @@ const UserProfile = () => {
     event.preventDefault()
     console.log(user)
     const updateUserData = { _id: userData?._id, ...user }
-    // dispatch(updateUser(updateUserData))
+    dispatch(updateUser(updateUserData))
   }
   return (
     <div className="container">
@@ -46,7 +46,7 @@ const UserProfile = () => {
             </div>
             {isEditing && (
               <form action="" onSubmit={handleSubmit}>
-                <input type="text" name="Name" value={user.Name} onChange={handleChange}></input>
+                <input type="text" name="name" value={user.name} onChange={handleChange}></input>
                 <button className="btns" type="submit">
                   Update profile
                 </button>

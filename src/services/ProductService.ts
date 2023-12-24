@@ -17,18 +17,21 @@ export const deleteProductBySlug = async (slug: string | undefined) => {
 
 export const setSingleProduct = createAction<Product>('products/setSingleProduct')
 
-export const createProduct = createAsyncThunk('products/createProduct', async (newProduct) => {
-  try {
-    const response = await axios.post(`${baseURLProduct}/products`, newProduct, {
-      // headers: { 'Content-Type': 'multipart/form-data' }
-    })
-    return response.data
-    // return response.data.payload.payload
-  } catch (error) {
-    console.error('Type of error', error)
-    throw Error('Cannot create the product')
+export const createProduct = createAsyncThunk(
+  'products/createProduct',
+  async (newProduct: FormData) => {
+    try {
+      const response = await axios.post(`${baseURLProduct}/products`, newProduct, {
+        // headers: { 'Content-Type': 'multipart/form-data' }
+      })
+      return response.data
+      // return response.data.payload.payload
+    } catch (error) {
+      console.error('Type of error', error)
+      throw Error('Cannot create the product')
+    }
   }
-})
+)
 
 //get single product by slug in show details
 export const getProductBySlug = async (slug: string | undefined, dispatch: AppDispatch) => {

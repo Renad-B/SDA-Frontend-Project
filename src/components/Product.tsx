@@ -11,7 +11,7 @@ const Products = () => {
   const { products, isLoading, error } = useSelector((state: RootState) => state.productsReducer)
   const [productName, setProductName] = useState('')
   const [isEditing, setIsEditing] = useState(false)
-  const [productId, setProudctId] = useState(0)
+  const [productId, setProudctId] = useState('')
 
   const [product, setProduct] = useState({
     name: '',
@@ -19,7 +19,7 @@ const Products = () => {
     description: '',
     price: 0,
     quantity: 0,
-    category: ''
+    categoryId: ''
   })
 
   const baseURLProduct = 'http://localhost:3002'
@@ -39,20 +39,6 @@ const Products = () => {
     }
   }
 
-  // const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-  //   if (event.target.type === 'file') {
-  //     const imageFile = event.target.files?.[0]
-  //     const { name } = event.target
-  //     setProduct((prevProduct) => {
-  //       return { ...prevProduct, [name]: imageFile }
-  //     })
-  //   } else {
-  //     const { value, name } = event.target
-  //     setProduct((prevProduct) => {
-  //       return { ...prevProduct, [name]: value }
-  //     })
-  //   }
-  // }
   const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (event.target.type === 'file') {
       const fileInput = (event.target as HTMLInputElement) || ''
@@ -82,28 +68,49 @@ const Products = () => {
     }
   }
 
+  // const handleSubmit = async (event: FormEvent) => {
+  //   event.preventDefault()
+  //   console.log(product)
+  //   const formData = new FormData()
+  //   formData.append('name', product.name)
+  //   formData.append('description', product.description)
+  //   formData.append('quantity', String(product.quantity))
+  //   formData.append('price', String(product.price))
+  //   formData.append('image', product.image)
+  //   formData.append('category', product.categoryId)
+
+  //   // Dispatch product and fetchproduct
+  //   try {
+  //     // await dispatch(createProduct(product))
+  //     if (isEditing) {
+  //       // If editing, dispatch an action to update the existing product
+  //       await dispatch(updateProduct(product))
+  //     } else {
+  //       // If not editing, dispatch an action to create a new product
+  //       await dispatch(createProduct(product))
+  //     }
+  //     // console.log(formData)
+  //     dispatch(fetchProducts())
+  //   } catch (error) {
+  //     console.error('Error during form submission:', error)
+  //   }
+  // }
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
-    console.log(product)
     const formData = new FormData()
     formData.append('name', product.name)
     formData.append('description', product.description)
     formData.append('quantity', String(product.quantity))
     formData.append('price', String(product.price))
     formData.append('image', product.image)
-    formData.append('category', product.category)
+    formData.append('categoryId', product.categoryId)
 
-    // Dispatch product and fetchproduct
     try {
-      // await dispatch(createProduct(product))
       if (isEditing) {
-        // If editing, dispatch an action to update the existing product
         await dispatch(updateProduct(product))
       } else {
-        // If not editing, dispatch an action to create a new product
-        await dispatch(createProduct(product))
+        await dispatch(createProduct(formData))
       }
-      // console.log(formData)
       dispatch(fetchProducts())
     } catch (error) {
       console.error('Error during form submission:', error)

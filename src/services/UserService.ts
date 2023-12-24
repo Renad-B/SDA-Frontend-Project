@@ -3,7 +3,7 @@ import axios from 'axios'
 axios.defaults.withCredentials = true
 api.defaults.withCredentials = true
 
-import { fetchUser } from '../redux/slices/users/userSlice'
+import { User, fetchUser } from '../redux/slices/users/userSlice'
 import api from '../api'
 
 export const baseURL = 'http://localhost:3002/api'
@@ -18,14 +18,15 @@ export const createUser = createAsyncThunk('users/createUser', async (newUser: F
   }
 })
 
-// export const updateUser = createAsyncThunk('users/updateUser', async (userData: object) => {
-//   try {
-//     const response = await axios.put(`${baseURL}/users/${userData._id}`, userData)
-//     return response
-//   } catch (error) {
-//     throw new Error('Failed to update user')
-//   }
-// })
+export const updateUser = createAsyncThunk('users/updateUser', async (userData: Partial<User>) => {
+  try {
+    const response = await axios.put(`${baseURL}/users/${userData._id}`, userData)
+    console.log(response)
+    return userData
+  } catch (error) {
+    throw new Error('Failed to update user')
+  }
+})
 
 export const activateUserAccount = createAsyncThunk(
   'users/activateUserAccount',

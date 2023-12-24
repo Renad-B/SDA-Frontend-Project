@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 import { AppDispatch, RootState } from '../redux/store'
 
-import SortProducts from '../components/SortProducts'
+// import SortProducts from '../components/SortProducts'
 import SearchInput from '../components/SearchInput'
 
 import { fetchCategory } from '../redux/slices/categories/categorySlice'
@@ -59,8 +59,8 @@ const Home = () => {
   const filterProducts: Product[] = products.filter((product: Product) => {
     const categoryMatch: boolean =
       selectedCategory.length === 0 ||
-      (typeof product.category === 'string' &&
-        selectedCategory.some((id: string) => product.category.includes(id)))
+      (typeof product.categoryId === 'string' &&
+        selectedCategory.some((id: string) => product.categoryId.includes(id)))
 
     const searchMatch: boolean =
       searchTerm === '' ||
@@ -142,7 +142,7 @@ const Home = () => {
           <div className="main-content">
             <div className="actions">
               <SearchInput searchTerm={searchTerm} handleSearch={handleSearch} />
-              <SortProducts />
+              {/* <SortProducts /> */}
             </div>
             <h2>All product are listed here:</h2>
             <section>

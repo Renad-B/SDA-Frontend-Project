@@ -3,7 +3,7 @@ import axios from 'axios'
 //why still cant acess the cooki
 axios.defaults.withCredentials = true
 
-import { baseURL, loginUser, logoutUser } from '../../../services/UserService'
+import { baseURL, loginUser, logoutUser, updateUser } from '../../../services/UserService'
 
 export const fetchUser = createAsyncThunk('users/fetchUser', async () => {
   try {
@@ -124,6 +124,18 @@ export const userSlice = createSlice({
             userData: state.userData
           })
         )
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        if (state.userData) {
+          state.userData.name = action.payload?.name
+          localStorage.setItem(
+            'login',
+            JSON.stringify({
+              isLogin: state.isLoggedIn,
+              userData: state.userData
+            })
+          )
+        }
       })
   }
 })
