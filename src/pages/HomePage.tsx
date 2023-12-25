@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 import { AppDispatch, RootState } from '../redux/store'
 
-// import SortProducts from '../components/SortProducts'
+import SortProducts from '../components/SortProducts'
 import SearchInput from '../components/SearchInput'
 
 import { fetchCategory } from '../redux/slices/categories/categorySlice'
@@ -142,7 +142,7 @@ const Home = () => {
           <div className="main-content">
             <div className="actions">
               <SearchInput searchTerm={searchTerm} handleSearch={handleSearch} />
-              {/* <SortProducts /> */}
+              <SortProducts />
             </div>
             <h2>All product are listed here:</h2>
             <section>

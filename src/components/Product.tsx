@@ -68,33 +68,6 @@ const Products = () => {
     }
   }
 
-  // const handleSubmit = async (event: FormEvent) => {
-  //   event.preventDefault()
-  //   console.log(product)
-  //   const formData = new FormData()
-  //   formData.append('name', product.name)
-  //   formData.append('description', product.description)
-  //   formData.append('quantity', String(product.quantity))
-  //   formData.append('price', String(product.price))
-  //   formData.append('image', product.image)
-  //   formData.append('category', product.categoryId)
-
-  //   // Dispatch product and fetchproduct
-  //   try {
-  //     // await dispatch(createProduct(product))
-  //     if (isEditing) {
-  //       // If editing, dispatch an action to update the existing product
-  //       await dispatch(updateProduct(product))
-  //     } else {
-  //       // If not editing, dispatch an action to create a new product
-  //       await dispatch(createProduct(product))
-  //     }
-  //     // console.log(formData)
-  //     dispatch(fetchProducts())
-  //   } catch (error) {
-  //     console.error('Error during form submission:', error)
-  //   }
-  // }
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
     const formData = new FormData()
@@ -156,7 +129,13 @@ const Products = () => {
 
           <div className="form-group">
             <label>Image:</label>
-            <input type="file" name="image" accept="image/*" onChange={handleChange} />
+            <input
+              type="file"
+              name="image"
+              accept="image/*"
+              disabled={isEditing}
+              onChange={handleChange}
+            />
           </div>
 
           <div className="form-group">
@@ -187,6 +166,7 @@ const Products = () => {
               name="categoryId"
               value={product.categoryId}
               placeholder="Add product category .."
+              disabled={isEditing}
               onChange={handleChange}
             />
           </div>

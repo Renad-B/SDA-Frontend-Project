@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { fetchUser } from '../redux/slices/users/userSlice'
 import { AppDispatch, RootState } from '../redux/store'
@@ -81,6 +81,10 @@ const Login = ({ pathName }: { pathName: string }) => {
           onChange={handleChange}
         />
         <button type="submit">Login</button>
+        <br />
+        <button type="submit">
+          <Link to="/dashboard/forget-password">Forget Password ?</Link>
+        </button>
       </form>
     </div>
   )

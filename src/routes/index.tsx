@@ -18,6 +18,8 @@ import AdminRoute from './AdminRoute'
 import Register from '../pages/Register'
 import Cart from '../pages/Cart'
 import { ActivateUser } from '../pages/ActivateUser'
+import { ForgetPassword } from '../pages/ForgetPassword'
+import ResetPassword from '../pages/ResetPassword'
 
 const Router = () => {
   return (
@@ -28,6 +30,8 @@ const Router = () => {
         <Route path="/products/:slug" element={<ProductDetails />} />
         <Route path="/dashboard/login" element={<Login pathName={''} />} />
         <Route path="/dashboard/logout" element={<Home />} />
+        <Route path="/dashboard/forget-password" element={<ForgetPassword />} />
+        <Route path="/users/reset-password/:token" element={<ResetPassword />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/dashboard/register" element={<Register />} />
         <Route path="/productinfo" element={<ProductDetails />} />

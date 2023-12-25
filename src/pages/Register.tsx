@@ -14,7 +14,7 @@ const Register = () => {
     name: '',
     email: '',
     password: '',
-    image: '',
+    // image: '',
     phone: '',
     address: ''
   })
@@ -46,7 +46,7 @@ const Register = () => {
     formData.append('email', user.email)
     formData.append('password', user.password)
     formData.append('phone', user.phone)
-    formData.append('image', user.image)
+    // formData.append('image', user.image)
     formData.append('address', user.address)
 
     if (user.name.length < 3) {
@@ -95,8 +95,8 @@ const Register = () => {
         <label htmlFor="address">Address:</label>
         <textarea name="address" value={user.address} onChange={handleChange} required />
 
-        <label htmlFor="image">Image:</label>
-        <input type="file" name="image" accept="image/*" onChange={handleChange} />
+        {/* <label htmlFor="image">Image:</label>
+        <input type="file" name="image" accept="image/*" onChange={handleChange} /> */}
 
         <button type="submit">Submit</button>
       </form>

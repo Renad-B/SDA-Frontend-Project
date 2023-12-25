@@ -44,6 +44,7 @@ const UserOrders = () => {
               )
             })}
         </section>
+        <button className="btns">Create New Order</button>
       </div>
     </div>
   )

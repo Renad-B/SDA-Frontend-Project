@@ -14,7 +14,6 @@ const AdminOrders = () => {
   useEffect(() => {
     dispatch(fetchOrders())
   }, [])
-  //!creatw the order in the morning
   // if (isLoading) {
   //   return <p>Loading....</p>
   // }
@@ -47,7 +46,6 @@ const AdminOrders = () => {
   //   setIsEditing(!isEditing)
   //   setCategoryName(name)
   // }
-  //todo create, delete, update
 
   return (
     <div className="container">
@@ -69,7 +67,7 @@ const AdminOrders = () => {
               return (
                 <article key={order._id} className="order">
                   {/* <p>ID: {order._id}</p> */}
-                  <p>Proudct ID:{order.product}</p>
+                  <p>Proudct ID:{order._id}</p>
                   <p>Shipping Address:{order.shippingAddress}</p>
                   <p> Shipping status:{order.status}</p>
                   <p> Shipping Total Amount:{order.totalAmount}</p>
@@ -78,8 +76,7 @@ const AdminOrders = () => {
               )
             })}
         </section>
-        <button className="btns">Delete</button>
-        <button className="btns">Edit</button>
+        <button className="btns">Create New Order</button>
         {/* <button
           onClick={() => {
             handleEditing(category.slug, category.name)

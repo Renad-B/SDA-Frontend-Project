@@ -61,15 +61,15 @@ export const productSlice = createSlice({
         state.singleProduct = foundSingleProduct
       }
     },
-    // sortProducts: (state, action) => {
-    //   const sorting = action.payload
-    //   console.log(sorting)
-    //   if (sorting === 'category') {
-    //     state.products.sort((a, b) => a.categoreis[0] - b.categoreis[0])
-    //   } else if (sorting === 'price') {
-    //     state.products.sort((a, b) => a.price - b.price)
-    //   }
-    // },
+    sortProducts: (state, action) => {
+      const sorting = action.payload
+      console.log(sorting)
+      if (sorting === 'category') {
+        state.products.sort((a, b) => a.categoryId[0] - b.categoryId[0])
+      } else if (sorting === 'price') {
+        state.products.sort((a, b) => a.price - b.price)
+      }
+    },
     addProduct: (state, action) => {
       state.products.push(action.payload)
     }
@@ -100,5 +100,5 @@ export const productSlice = createSlice({
       })
   }
 })
-export const { searchProduct, addProduct, findBySlug } = productSlice.actions
+export const { searchProduct, addProduct, findBySlug, sortProducts } = productSlice.actions
 export default productSlice.reducer

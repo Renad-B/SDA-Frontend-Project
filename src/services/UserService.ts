@@ -89,3 +89,23 @@ export const logoutUser = createAsyncThunk('user/logoutUser', async () => {
     throw new Error('Falied to logout user')
   }
 })
+
+export const forgetPassword = createAsyncThunk('user/forgetPassword', async (email: string) => {
+  try {
+    const response = await axios.post(`${baseURL}/users/forget-password`, { email: email })
+    return response.data
+  } catch (error) {
+    throw new Error('Falied')
+  }
+})
+export const resetPassword = createAsyncThunk('user/resetPassword', async (data: object) => {
+  try {
+    const response = await axios.put(`${baseURL}/users/reset-password`, {
+      password: data.password,
+      token: data.token
+    })
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
+})

@@ -27,6 +27,7 @@ const Category = () => {
 
   const handleDelete = (slug: string) => {
     dispatch(deleteCategory(slug))
+    dispatch(fetchCategory()) // Refresh
   }
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
