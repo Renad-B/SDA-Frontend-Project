@@ -1,20 +1,17 @@
-import { ChangeEvent, useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import AdminSidebar from '../Admin/AdminSidebar'
 
-import { fetchUser, searchUser } from '../../redux/slices/users/userSlice'
+import { fetchUser } from '../../redux/slices/users/userSlice'
 import { AppDispatch, RootState } from '../../redux/store'
 
 import Table from 'react-bootstrap/Table'
-import SearchInput from '../SearchInput'
 
-import { banUser, deleteUser, unbanUser } from '../../services/UserService'
+import { banUser, deleteUser, grantRole, unbanUser } from '../../services/UserService'
 
 const UsersList = () => {
   const { users, isLoading, error } = useSelector((state: RootState) => state.usersReducer)
-  //!fix it later
-  const [searchTerm, setSearchTerm] = useState('')
 
   const dispatch: AppDispatch = useDispatch()
 
@@ -37,7 +34,7 @@ const UsersList = () => {
       //see if you can use toast
       dispatch(fetchUser())
     } catch (error) {
-      console.log(error.response?.data.messgae || error.messgae)
+      throw Error('Cant fetch the user')
     }
     //re fetch
     dispatch(fetchUser())
@@ -56,6 +53,16 @@ const UsersList = () => {
     }
   }
 
+  //role
+  const handleGrantRole = async (id: string) => {
+    try {
+      if (id) {
+        dispatch(grantRole(id))
+      }
+    } catch (error) {
+      throw Error('cant fetch users')
+    }
+  }
   return (
     <div className="container">
       <AdminSidebar />
@@ -87,6 +94,9 @@ const UsersList = () => {
                             className="btns"
                             onClick={() => handleBanUnban(user._id, user.isBanned)}>
                             {user.isBanned ? 'unban' : 'ban'}
+                          </button>
+                          <button className="btns" onClick={() => handleGrantRole(user._id)}>
+                            Change the role as Admin
                           </button>
                         </td>
                       </tr>

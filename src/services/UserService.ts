@@ -109,3 +109,13 @@ export const resetPassword = createAsyncThunk('user/resetPassword', async (data:
     console.log(error)
   }
 })
+//role for user
+export const grantRole = createAsyncThunk('users/grantRole', async (id: string) => {
+  try {
+    const response = await axios.put(`${baseURL}/users/role/${id}`)
+    fetchUser()
+    return response.data
+  } catch (error) {
+    throw new Error('Falied to band user')
+  }
+})
