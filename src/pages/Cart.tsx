@@ -7,6 +7,7 @@ import { AppDispatch, RootState } from '../redux/store'
 export const Cart = () => {
   const { cartItems } = useSelector((state: RootState) => state.cartReducer)
   const dispatch: AppDispatch = useDispatch()
+  const baseURLProduct = 'http://localhost:3002'
 
   const handleRemove = (id: number) => {
     dispatch(removeFromCart(id))
@@ -48,7 +49,8 @@ export const Cart = () => {
               {cartItems.map((cartItem, index) => (
                 <article key={`${cartItem.id}-${index}`} className="products">
                   <div className="product">
-                    <img src={cartItem.image} alt={cartItem.name} />
+                    {/* <img src={cartItem.image} alt={cartItem.name} /> */}
+                    <img src={`${baseURLProduct}/${cartItem.image}`} alt="product img" />
                     <h5>Name: {cartItem.name}</h5>
                     <p>Description: {cartItem.description.substring(0, 20)}...</p>
                     <h6>Price: {cartItem.price}$</h6>

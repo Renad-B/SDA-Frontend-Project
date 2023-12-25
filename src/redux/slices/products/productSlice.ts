@@ -64,10 +64,10 @@ export const productSlice = createSlice({
     sortProducts: (state, action) => {
       const sorting = action.payload
       console.log(sorting)
-      if (sorting === 'category') {
-        state.products.sort((a, b) => a.categoryId[0] - b.categoryId[0])
+      if (sorting === 'name') {
+        state.products.sort((a, b) => a.name.localeCompare(b.name))
       } else if (sorting === 'price') {
-        state.products.sort((a, b) => a.price - b.price)
+        state.products.sort((a, b) => Number(a.price) - Number(b.price))
       }
     },
     addProduct: (state, action) => {

@@ -17,7 +17,7 @@ const SortProducts = () => {
         <option value="price" defaultValue="price">
           Price
         </option>
-        <option value="category">Category</option>
+        <option value="name">name</option>
       </select>
     </div>
   )
