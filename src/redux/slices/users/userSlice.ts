@@ -57,17 +57,6 @@ export const userSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    // login: (state, action: PayloadAction<User>) => {
-    //   state.isLoggedIn = true
-    //   state.userData = action.payload
-    //   localStorage.setItem('userData', JSON.stringify(state))
-    // },
-    // logout: (state) => {
-    //   state.isLoggedIn = false
-    //   state.userData = null
-    //   // localStorage.setItem('userData', JSON.stringify(state))
-    //   localStorage.removeItem('userData')
-    // },
     searchUser: (state, action) => {
       state.searchTerm = action.payload
       // Filter users based on the search term
@@ -77,15 +66,6 @@ export const userSlice = createSlice({
     },
     addUser: (state, action) => {
       state.users.push(action.payload)
-    },
-    updateUser: (state, action) => {
-      const { id, firstName } = action.payload
-      const findUser = state.users.find((user) => user._id === id)
-      if (findUser) {
-        findUser.name = firstName
-        state.userData = findUser
-        localStorage.setItem('userData', JSON.stringify(state))
-      }
     }
   },
   extraReducers(builder) {

@@ -66,7 +66,7 @@ const ProductDetails = () => {
               <p>Description: {singleProduct.description}</p>
               <p>Shipping: {singleProduct.shipping}</p>
               <p>Quanity: {singleProduct.quantity}</p>
-              <p>Category: {singleProduct.categoryId}</p>
+              {/* <p>Category: {singleProduct.categoryId}</p> */}
               <button
                 className="btns"
                 onClick={() => {

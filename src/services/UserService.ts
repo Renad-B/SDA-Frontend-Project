@@ -98,6 +98,7 @@ export const forgetPassword = createAsyncThunk('user/forgetPassword', async (ema
     throw new Error('Falied')
   }
 })
+
 export const resetPassword = createAsyncThunk('user/resetPassword', async (data: object) => {
   try {
     const response = await axios.put(`${baseURL}/users/reset-password`, {
@@ -106,9 +107,10 @@ export const resetPassword = createAsyncThunk('user/resetPassword', async (data:
     })
     return response.data
   } catch (error) {
-    console.log(error)
+    throw new Error('Falied')
   }
 })
+
 //role for user
 export const grantRole = createAsyncThunk('users/grantRole', async (id: string) => {
   try {
@@ -116,6 +118,6 @@ export const grantRole = createAsyncThunk('users/grantRole', async (id: string) 
     fetchUser()
     return response.data
   } catch (error) {
-    throw new Error('Falied to band user')
+    throw new Error('Falied')
   }
 })

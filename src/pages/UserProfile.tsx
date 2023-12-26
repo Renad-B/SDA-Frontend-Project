@@ -1,9 +1,10 @@
 import { FormEvent, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { AppDispatch, RootState } from '../redux/store'
+
 import UserSidebar from '../components/User/UserSidebar'
 
-import { AppDispatch, RootState } from '../redux/store'
 import { updateUser } from '../services/UserService'
 
 const UserProfile = () => {

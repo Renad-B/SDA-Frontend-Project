@@ -1,8 +1,10 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import jwtDecode from 'jwt-decode'
-import { activateUserAccount } from '../services/UserService'
+
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../redux/store'
+
+import { activateUserAccount } from '../services/UserService'
 
 export const ActivateUser = () => {
   const { token } = useParams()

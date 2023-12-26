@@ -12,9 +12,7 @@ import { Product, fetchProducts, searchProduct } from '../redux/slices/products/
 import { addToCart } from '../redux/slices/Cart/cartSlice'
 
 const Home = () => {
-  const { products, isLoading, error, searchTerm } = useSelector(
-    (state: RootState) => state.productsReducer
-  )
+  const { products, searchTerm } = useSelector((state: RootState) => state.productsReducer)
   const baseURLProduct = 'http://localhost:3002'
 
   const { categories } = useSelector((state: RootState) => state.categoriesReducer)
@@ -55,7 +53,6 @@ const Home = () => {
   }
 
   //todo how to make it work + pagination logic ?
-
   const filterProducts: Product[] = products.filter((product: Product) => {
     const categoryMatch: boolean =
       selectedCategory.length === 0 ||
@@ -99,12 +96,6 @@ const Home = () => {
       </button>
     )
   }
-  // if (isLoading) {
-  //   return <p>Loading ...</p>
-  // }
-  // if (error) {
-  //   return <p> {error}...</p>
-  // }
 
   const handleAddToCart = (product: Product) => {
     //add to cart

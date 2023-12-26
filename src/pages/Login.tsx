@@ -13,15 +13,12 @@ const Login = ({ pathName }: { pathName: string }) => {
   const { users, userData } = useSelector((state: RootState) => state.usersReducer)
   const dispatch: AppDispatch = useDispatch()
 
-  // useEffect(() => {
-  //   dispatch(fetchUser())
-  // }, [dispatch])
-
   const navigate = useNavigate()
   const [user, setUser] = useState({
     email: '',
     password: ''
   })
+
   //validation
   const [passwordError, setPasswordError] = useState('')
   const [emailError, setEmailError] = useState('')

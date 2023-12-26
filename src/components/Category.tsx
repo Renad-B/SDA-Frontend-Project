@@ -1,11 +1,11 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../redux/store'
 
 import AdminSidebar from './Admin/AdminSidebar'
-import { fetchCategory } from '../redux/slices/categories/categorySlice'
 
-import { AppDispatch, RootState } from '../redux/store'
 import { createCategory, deleteCategory, updateCategory } from '../services/CategoryServices'
+import { fetchCategory } from '../redux/slices/categories/categorySlice'
 
 const Category = () => {
   const { categories } = useSelector((state: RootState) => state.categoriesReducer)
@@ -17,13 +17,6 @@ const Category = () => {
   useEffect(() => {
     dispatch(fetchCategory())
   }, [])
-
-  // if (isLoading) {
-  //   return <p>Loading ...</p>
-  // }
-  // if (error) {
-  //   return <p> {error}...</p>
-  // }
 
   const handleDelete = (slug: string) => {
     dispatch(deleteCategory(slug))

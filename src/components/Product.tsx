@@ -1,9 +1,9 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import AdminSidebar from './Admin/AdminSidebar'
 import { AppDispatch, RootState } from '../redux/store'
 
+import AdminSidebar from './Admin/AdminSidebar'
 import { fetchProducts } from '../redux/slices/products/productSlice'
 import { createProduct, deleteProductBySlug, updateProduct } from '../services/ProductService'
 
@@ -90,13 +90,6 @@ const Products = () => {
     }
   }
 
-  // if (isLoading) {
-  //   return <p>Loading ...</p>
-  // }
-  // if (error) {
-  //   return <p> {error}...</p>
-  // }
-
   return (
     <div className="container">
       <AdminSidebar />
@@ -181,7 +174,6 @@ const Products = () => {
             products.map((product) => {
               return (
                 <article key={product.name} className="product">
-                  {/* <img src={product.image} alt="product-img" /> */}
                   <img src={`${baseURLProduct}/${product.image}`} alt="product img" />
                   <p>{product.name}</p>
                   <p>{product.description}</p>
